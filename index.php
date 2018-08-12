@@ -1,13 +1,14 @@
-<?php include 'header.php'; ?>
+<?php include 'subcomponents/header.php'; ?>
 
 
-<div class="container bg-white p-4">
-  <h1 class="">Tabla de reservas</h1>
-  <hr>
-  <div class="row">
-    <div class="col-md-4">
+<div style="min-height: 95%" class="container p-4">
+  <div class="row p-2 bg-white shadow-sm rounded">
+    <h2 class="font-weight-light">Tabla de reservas</h2>
+  </div>
+  <div class="row justify-content-between mt-3 bg-white shadow rounded">
+    <div class="col-md-4 p-3 ">
       <h4>Menu Reservas</h4>
-
+      <hr>
       <form class="">
         <div class="form-group">
           <label for="">Descripcion de reserva</label>
@@ -36,7 +37,7 @@
       </div>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-8 p-3">
       <div id="calendar"></div>
     </div>
 
@@ -94,4 +95,4 @@
   }
 </script>
 
-<?php include 'footer.php'; ?>
+<?php include 'subcomponents/footer.php'; ?>

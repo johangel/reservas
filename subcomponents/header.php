@@ -22,14 +22,14 @@ header( "Location: http://localhost/reservas/login");
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Reservas <span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost/reservas">Reservas <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Personal</a>
+          <a class="nav-link" href="http://localhost/reservas/perfil">Personal</a>
         </li>
         <li class="nav-item mr-auto">
-          <a class="nav-link" href="#">Aun no se</a>
+          <a class="nav-link" href="http://localhost/reservas/RoleManagement">Gestionar roles</a>
         </li>
 
 

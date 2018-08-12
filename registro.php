@@ -12,7 +12,7 @@ header( "Location: http://localhost/reservas");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="icon" href="assets/logo.png">
-<?php include 'dependencies.php'; ?>
+<?php include 'subcomponents/dependencies.php'; ?>
 <title>Sitema Reservas</title>
 </head>
 <body>
@@ -69,4 +69,4 @@ header( "Location: http://localhost/reservas");
 
   }
 </script>
-<?php include 'footer.php'; ?>
+<?php include 'subcomponents/footer.php'; ?>
