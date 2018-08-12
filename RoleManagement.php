@@ -17,17 +17,18 @@
           <tr>
             <th>Nombre</th>
             <th>Rol</th>
+            <th>id de usuario</th>
           </tr>
         </thead>
-        <tbody>
-          <tr class="selectableRow" onclick="selectUser(event, 'Johangelito')">
+        <tbody id="userTablesBody">
+          <!-- <tr class="selectableRow" onclick="selectUser(event, 'Johangelito')">
             <td>Johangelito</td>
             <td>Usuario</td>
           </tr>
           <tr class="selectableRow" onclick="selectUser(event, 'Macoisito')">
             <td>Macoisito</td>
             <td>Especialista</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
@@ -94,7 +95,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Editar rol</button>
+        <button type="submit" onclick="updateSpecialistInfo(event)" class="btn btn-primary">Editar rol</button>
       </form>
     </div>
   </div>
@@ -103,14 +104,15 @@
 </div>
 <script type="text/javascript">
 $(document).ready( function () {
-  $('#userTables').DataTable();
+
+  getAllUsers();
 } );
 
-function selectUser(evt, name){
+function selectUser(event, name){
   $('#userName').val(name);
-  console.log(evt);
+  console.log(name);
   $('.selected').removeClass('selected');
-  evt.target.parentElement.classList.add('selected');
+  event.target.parentElement.classList.add('selected');
 }
 
 function showRoleOptions(value){
@@ -119,6 +121,56 @@ function showRoleOptions(value){
   }else{
     $('#optionsContainer').addClass('hidden');
   }
+}
+
+function getAllUsers(){
+  $.ajax({
+    type: "GET",
+    url : "http://localhost/reservas/controladores/getAllUsers.php",
+    datatype:'json',
+    success :function(data, status){
+      data = JSON.parse(data);
+      var table = document.getElementById("userTablesBody");
+      var cell1;
+      var cell2;
+      var row;
+
+      for(var i = 0; i <data.length; i++ ){
+        row = table.insertRow(i);
+        var name = data[i].nombre;
+        row.className='selectableRow';
+        cell1 = row.insertCell(0);
+        cell2 = row.insertCell(1);
+        cell3 = row.insertCell(2);
+        cell1.innerHTML = data[i].nombre;
+        cell2.innerHTML = data[i].rol;
+        cell3.innerHTML = data[i].user_id;
+        row = null;
+      }
+      $("#userTablesBody").on('click','tr',function(e) {
+          console.log($(this)['0'].children[2].innerHTML);
+          selectUser(e,$(this)['0'].children[0].innerHTML);
+      });
+      $('#userTables').DataTable();
+    }
+  });
+}
+
+function updateSpecialistInfo(evt){
+
+  evt.preventDefault();
+  request={
+    user_id:'1'
+  }
+  $.ajax({
+    type: "POST",
+    url : "http://localhost/reservas/controladores/updateSpecialistInfo.php",
+    data: request,
+    success :function(data, status){
+      console.log(data);
+    }
+  });
+
 }
 </script>
 <?php include 'subcomponents/footer.php'; ?>
