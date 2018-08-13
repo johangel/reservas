@@ -7,7 +7,7 @@
   </div>
   <div class="row justify-content-between mt-3 bg-white shadow rounded">
     <div class="col-md-4 p-3 ">
-      <h4>Menu Reservas</h4>
+      <h4>Especificaciones de reservas</h4>
       <hr>
       <form class="">
         <div class="form-group">
@@ -38,6 +38,28 @@
     </div>
 
     <div class="col-md-8 p-3">
+      <h4>Menu Creacion de reservas</h4>
+      <hr>
+      <div class="row mb-4">
+        <div class="form-group col-md-12">
+          <label for="">Area especialista</label>
+          <select class="form-control" id="">
+            <option selected disabled>Escoger una especializacion</option>
+            <option onclick="setSpeciality('Especializacion 1')">Especializacion 1</option>
+            <option onclick="setSpeciality('Especializacion 2')">Especializacion 2</option>
+            <option onclick="setSpeciality('Especializacion 3')">Especializacion 3</option>
+
+          </select>
+        </div>
+
+        <div class="form-group  col-md-12">
+          <label for="">Doctores filtrados</label>
+          <select onchange="setDoctor(value)" class="form-control" id="doctorsSelect">
+            <option value="" selected disabled>Selecciona un especialista</option>
+          </select>
+        </div>
+
+      </div>
       <div id="calendar"></div>
     </div>
 
@@ -79,19 +101,58 @@
 <script src="js/createCalendar.js"></script>
 
 <script type="text/javascript">
+
+var allSpecialists = []
+var doctor_user_id;
+  $(document).ready( function () {
+    getAllSpecialists();
+  });
+
+  function getAllSpecialists(){
+    $.ajax({
+      type: 'GET',
+      url : "http://localhost/reservas/controladores/getAllSpecialists.php",
+      success: function(data, status){
+        data =JSON.parse(data);
+        allSpecialists = data;
+        console.log(allSpecialists);
+      }
+    })
+  }
+
   function crearReserva(){
     var eventData;
+
     eventData = {
+      id_cliente:'',
+      id_specialist:'',
       title: $('#descripcion').val(),
       start: Globalstart,
       end: globalEnd,
       specialist: $('#especialista').val(),
       Cost: $('#precio').val()
     };
+
+
     console.log(eventData);
     $('#calendar').fullCalendar('renderEvent', eventData); // stick? = true
     toastr.success('Se creo la reserva con exito', 'Exito');
     $('#FormEvent').modal('hide');
+  }
+
+  function setSpeciality(value){
+    for(var i = 0; i<allSpecialists.length; i++){
+      if(allSpecialists[i].specialistField == value){
+        doctorsSelect = document.getElementById('doctorsSelect');
+        doctorsSelect.options[doctorsSelect.options.length] = new Option('Dr. ' + allSpecialists[i].nombre, allSpecialists[i].user_id);
+      }
+    }
+  }
+
+  function setDoctor(value){
+    doctor_user_id = value;
+    console.log(doctor_user_id);
+    canCreate = true;
   }
 </script>
 

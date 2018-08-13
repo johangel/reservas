@@ -1,4 +1,4 @@
-  var queVa = true;
+  var canCreate = false;
   var globalStart;
   var globalEnd;
   $(document).ready(function() {
@@ -16,6 +16,10 @@
     selectable: true,
     selectHelper: true,
     select: function(start, end) {
+      if(!canCreate){
+        toastr.error('escoger una especialista antes de realizar una reserva');
+        return;
+      }
       Globalstart = start;
       globalEnd = end;
       $('#FormEvent').modal('show');

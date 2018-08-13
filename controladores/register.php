@@ -21,14 +21,6 @@ $sql_create_userInfo = "INSERT INTO user_info (user_id, rol) VALUES ('$lastid', 
 $result2 = mysqli_query($conn, $sql_create_userInfo);
 
 var_dump($result2);
+mysqli_close($conn);
 
-// if ($result) {
-//
-// }
-//
-// if(!($row == null)){
-//   echo 'true';
-// }else{
-//   echo 'false';
-// }
 ?>

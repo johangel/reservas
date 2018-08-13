@@ -7,11 +7,11 @@ $result = mysqli_query($conn, $sql);
 
 while ($fila = mysqli_fetch_assoc($result)) {
   $returnArray[] = $fila;
-  // echo json_encode($fila);
-  // echo ',';
+
 }
 $options = json_encode($returnArray);
 echo $options;
+mysqli_close($conn);
 // $row = mysqli_fetch_array($result);
 // echo json_encode($row);
 

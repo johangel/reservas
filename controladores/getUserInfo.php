@@ -9,4 +9,5 @@ $sql = "SELECT * FROM user_info i INNER JOIN usuarios u ON i.user_id = u.id WHER
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 echo json_encode($row);
+mysqli_close($conn);
 ?>
