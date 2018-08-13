@@ -39,26 +39,22 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputEmail4">Usuario</label>
-            <input type="text" class="form-control" id="userName" placeholder="Nombre">
+            <input type="text" class="form-control" id="userName" readonly placeholder="Nombre">
           </div>
 
           <div class="form-group col-md-6">
             <label for="inputState">Rol</label>
-            <select onchange="showRoleOptions(value)" id="inputState" class="form-control">
+            <select onchange="showRoleOptions(value)" id="rol" class="form-control">
               <option selected disabled>Seleccionar rol</option>
               <option value="Especialista">Especialista</option>
               <option value="Usuario">Usuario</option>
             </select>
           </div>
-          <!-- <div class="form-group col-md-6">
-            <label for="inputPassword4">Rol</label>
-            <input type="text" class="form-control" id="inputPassword4" placeholder="Password">
-          </div> -->
         </div>
         <div id="optionsContainer" class="hidden">
           <div class="form-group">
             <label for="inputState">Area especializacion</label>
-            <select id="inputState" class="form-control">
+            <select id="specializacionField" class="form-control">
               <option selected disabled>Seleccionar area especializacion</option>
               <option>Especializacion 1</option>
               <option>Especializacion 2</option>
@@ -87,7 +83,7 @@
           </div>
           <div class="form-group">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck">
+              <input class="form-check-input" type="checkbox" id="specialistActive">
               <label class="form-check-label" for="gridCheck">
                 Especialista Activo
               </label>
@@ -103,16 +99,47 @@
 
 </div>
 <script type="text/javascript">
+var user_id;
+var row_table;
 $(document).ready( function () {
-
   getAllUsers();
 } );
 
-function selectUser(event, name){
-  $('#userName').val(name);
-  console.log(name);
-  $('.selected').removeClass('selected');
-  event.target.parentElement.classList.add('selected');
+function selectUser(event, name, id){
+  user_id = id;
+  row_table = event.target.parentElement.children[1];
+  $.ajax({
+    type:'GET',
+    url : "http://localhost/reservas/controladores/getSpecialistInfo?id="+id,
+    success: function(data, status){
+      if(data == 'false'){
+        $('#optionsContainer').addClass('hidden');
+        $('#rol').val('Usuario');
+        $('#CMD').val('');
+        $('#salary').val('');
+        $('#specializacionField').val('');
+        $('#specialistActive')['0'].checked = false;
+
+      }else{
+        var specialist = {}
+         specialist = JSON.parse(data);
+         $('#optionsContainer').removeClass('hidden');
+         $('#CMD').val(specialist['cmd']);
+         $('#rol').val('Especialista');
+         $('#salary').val(specialist['salary']);
+         $('#specializacionField').val(specialist['specialistField']);
+         if(specialist['active'] == 1){
+           $('#specialistActive')['0'].checked = true;
+         }else{
+           $('#specialistActive')['0'].checked = false;
+         }
+      }
+
+      $('#userName').val(name);
+      $('.selected').removeClass('selected');
+      event.target.parentElement.classList.add('selected');
+    }
+  });
 }
 
 function showRoleOptions(value){
@@ -120,14 +147,20 @@ function showRoleOptions(value){
     $('.hidden').removeClass('hidden');
   }else{
     $('#optionsContainer').addClass('hidden');
+    $('#CMD').val('');
+    $('#salary').val('');
+    $('#specializacionField').val('');
+    $('#specialistActive')['0'].checked = false;
   }
 }
 
 function getAllUsers(){
+
   $.ajax({
     type: "GET",
     url : "http://localhost/reservas/controladores/getAllUsers.php",
     datatype:'json',
+
     success :function(data, status){
       data = JSON.parse(data);
       var table = document.getElementById("userTablesBody");
@@ -147,27 +180,47 @@ function getAllUsers(){
         cell3.innerHTML = data[i].user_id;
         row = null;
       }
+
       $("#userTablesBody").on('click','tr',function(e) {
-          console.log($(this)['0'].children[2].innerHTML);
-          selectUser(e,$(this)['0'].children[0].innerHTML);
+          // console.log($(this)['0'].children[2].innerHTML);
+          selectUser(e,$(this)['0'].children[0].innerHTML, $(this)['0'].children[2].innerHTML);
       });
       $('#userTables').DataTable();
     }
+
   });
 }
 
 function updateSpecialistInfo(evt){
 
   evt.preventDefault();
-  request={
-    user_id:'1'
+
+  var cmd = $('#CMD').val();
+  var rol = $('#rol').val();
+  var salary = $('#salary').val();
+  var specializacionField  = $('#specializacionField').val();
+  if($('#specialistActive')['0'].checked){
+      var active = 1;
+    }else{
+      var active = 0;
+    }
+
+  var request={
+    user_id: user_id,
+    cmd:cmd,
+    rol:rol,
+    salary:salary,
+    specializacionField:specializacionField,
+    active:active
   }
+
   $.ajax({
     type: "POST",
     url : "http://localhost/reservas/controladores/updateSpecialistInfo.php",
     data: request,
     success :function(data, status){
-      console.log(data);
+      toastr.success(data);
+      row_table.innerHTML = rol;
     }
   });
 
