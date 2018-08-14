@@ -16,19 +16,19 @@
         </div>
         <div class="form-group">
           <label for="">Especialista</label>
-          <input type="text" class="form-control" id="especilisaEdit" placeholder="Nombre del especialista">
+          <input type="text" class="form-control" id="especilisaEdit" placeholder="Nombre del especialista" readonly>
         </div>
         <div class="form-group">
           <label for="">Hora de inico</label>
-          <input type="text" class="form-control" id="horaInicio" placeholder="">
+          <input type="text" class="form-control" id="horaInicio" placeholder="" readonly>
         </div>
         <div class="form-group">
           <label for="">Hora de finalizado</label>
-          <input type="text" class="form-control" id="horaFinal" placeholder="">
+          <input type="text" class="form-control" id="horaFinal" placeholder="" readonly>
         </div>
         <div class="form-group">
           <label for="">Costo de reserva</label>
-          <input type="text" class="form-control" id="precioEdit" placeholder="Precio total de consulta">
+          <input type="text" class="form-control" id="precioEdit" placeholder="Precio total de consulta" readonly>
         </div>
       </form>
       <div class="btn-group" role="group">
@@ -83,11 +83,11 @@
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">Especialista:</label>
-            <input type="text" class="form-control" id="especialista">
+            <input type="text" class="form-control" id="especialista" readonly>
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">Precio consulta:</label>
-            <input type="text" class="form-control" id="precio">
+            <input type="text" class="form-control" id="precio" readonly>
           </div>
         </form>
       </div>
@@ -124,19 +124,29 @@ var doctor_user_id;
     var eventData;
 
     eventData = {
-      id_cliente:'',
-      id_specialist:'',
+      id_cliente: <?php echo $_SESSION['userId'] ?>,
+      client: '<?php echo $_SESSION['username'] ?>',
+      id_specialist:doctor_user_id,
       title: $('#descripcion').val(),
-      start: Globalstart,
-      end: globalEnd,
+      start: moment(Globalstart).format(),
+      end: moment(globalEnd).format(),
       specialist: $('#especialista').val(),
       Cost: $('#precio').val()
     };
 
+    // console.log(moment(eventData.start._d).format('LLLL'));
 
     console.log(eventData);
+
+    $.ajax({
+      type:'POST',
+      url:"http://localhost/reservas/controladores/saveReservation.php",
+      data: eventData,
+      success: function(data, status){
+      }
+    })
     $('#calendar').fullCalendar('renderEvent', eventData); // stick? = true
-    toastr.success('Se creo la reserva con exito', 'Exito');
+    toastr.success('Se creo la reserva con exito');
     $('#FormEvent').modal('hide');
   }
 
@@ -152,6 +162,12 @@ var doctor_user_id;
   function setDoctor(value){
     doctor_user_id = value;
     console.log(doctor_user_id);
+    for(var i = 0; i<allSpecialists.length; i++){
+      if(allSpecialists[i].user_id == doctor_user_id){
+        $('#especialista').val(allSpecialists[i].nombre);
+        $('#precio').val(allSpecialists[i].salary + '$');
+      }
+    }
     canCreate = true;
   }
 </script>
