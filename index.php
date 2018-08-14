@@ -31,14 +31,17 @@
           <input type="text" class="form-control" id="precioEdit" placeholder="Precio total de consulta" readonly>
         </div>
       </form>
-      <div class="btn-group" role="group">
-        <button type="button" class="btn btn-primary" disabled>Editar reserva</button>
-        <button type="button" class="btn btn-danger" disabled>Eliminar reserva</button>
+      <div id="btn_group" class="btn-group hidden" role="group">
+        <button type="button" class="btn btn-primary" onclick="updateReservation()">Editar reserva</button>
+        <button type="button" onclick="deleteReservation()" class="btn btn-danger">Eliminar reserva</button>
       </div>
     </div>
 
     <div class="col-md-8 p-3">
-      <h4>Menu Creacion de reservas</h4>
+      <div class=" p-2 row justify-content-between">
+        <h4>Menu Creacion de reservas</h4>
+        <button class="btn btn-sm btn-primary" onclick="clientsReservations()">ver mis reservaciones</button>
+      </div>
       <hr>
       <div class="row mb-4">
         <div class="form-group col-md-12">
@@ -55,7 +58,7 @@
         <div class="form-group  col-md-12">
           <label for="">Doctores filtrados</label>
           <select onchange="setDoctor(value)" class="form-control" id="doctorsSelect">
-            <option value="" selected disabled>Selecciona un especialista</option>
+            <option value="" selected>Selecciona un especialista</option>
           </select>
         </div>
 
@@ -98,12 +101,15 @@
     </div>
   </div>
 </div>
+
 <script src="js/createCalendar.js"></script>
 
 <script type="text/javascript">
 
-var allSpecialists = []
-var doctor_user_id;
+  var allSpecialists = []
+  var doctor_user_id;
+  var specialist_reservations = [];
+
   $(document).ready( function () {
     getAllSpecialists();
   });
@@ -151,6 +157,7 @@ var doctor_user_id;
   }
 
   function setSpeciality(value){
+    $('#doctorsSelect').find('option').remove().end().append('<option selected>Escoger una especializacion</option>').val('whatever');
     for(var i = 0; i<allSpecialists.length; i++){
       if(allSpecialists[i].specialistField == value){
         doctorsSelect = document.getElementById('doctorsSelect');
@@ -161,6 +168,22 @@ var doctor_user_id;
 
   function setDoctor(value){
     doctor_user_id = value;
+    $.ajax({
+      type: 'GET',
+      url : "http://localhost/reservas/controladores/getSpecialistsReservations?id_specialist="+doctor_user_id,
+      success: function(response, status){
+        specialist_reservations = JSON.parse(response);
+        console.log(specialist_reservations);
+        for(var i = 0; i<specialist_reservations.length; i++){
+          specialist_reservations[i].title = '';
+          specialist_reservations[i].cost = '';
+        }
+        $('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar('renderEvents', specialist_reservations);
+
+      }
+    })
+
     console.log(doctor_user_id);
     for(var i = 0; i<allSpecialists.length; i++){
       if(allSpecialists[i].user_id == doctor_user_id){
@@ -169,6 +192,51 @@ var doctor_user_id;
       }
     }
     canCreate = true;
+  }
+
+  function deleteReservation(){
+    request={
+      id_reservation: id_reservation
+    };
+
+    $.ajax({
+      type: "POST",
+      url : "http://localhost/reservas/controladores/deleteReservation.php",
+      data:  request,
+      success: function(response, status){
+        console.log(response)
+        $('#calendar').fullCalendar('removeEvents',id_reservation);
+        id_reservation = 0;
+        $('#btn_group').addClass('');
+        $('#DescriptionEdit').val('');
+        $('#especilisaEdit').val('');
+        $('#horaInicio').val('');
+        $('#horaFinal').val('');
+        $('#precioEdit').val('');
+        toastr.success('reserva eliminada con exito');
+      }
+    })
+  }
+
+  function updateReservation(){
+    request={
+      title: $('#DescriptionEdit').val(),
+      id_reservation: id_reservation
+    };
+
+    $.ajax({
+      type: "POST",
+      data : request,
+      url : "http://localhost/reservas/controladores/updateReservation.php",
+      success: function(response, status){
+        toastr.success('se edito la reserva con exito');
+      }
+    })
+  }
+
+  function clientsReservations(){
+    $('#calendar').fullCalendar('removeEvents');
+    $('#calendar').fullCalendar('renderEvents', ReservationsByCliente);
   }
 </script>
 

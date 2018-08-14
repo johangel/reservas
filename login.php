@@ -17,8 +17,8 @@ header( "Location: http://localhost/reservas");
 </head>
 <body>
 
-<div style="height: 95vh;" class="row justify-content-md-center align-items-center">
-  <div class="FormContainer col-md-3 p-3 bg-light text-center">
+<div style="height: 100vh;" class="row justify-content-md-center align-items-center">
+  <div class="FormContainer col-md-3 p-3 bg-light text-center shadow rounded">
     <div class="form-signin">
       <img class="mb-3" src="assets/logo.png" alt="" width="200" height="200">
       <h1 class="h3 mb-3 font-weight-normal">Ingresa con tus crendeciales</h1>
@@ -28,7 +28,8 @@ header( "Location: http://localhost/reservas");
       <button class="btn btn-md btn-primary btn-block mt-3" onclick="login()" type="submit">Ingresar</button>
       <a href="http://localhost/reservas/registro.php" class="btn btn-sm btn-secondary btn-block mt-1 white" type="submit">Registrate</a>
 
-      <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+      <p class="mt-5 mb-3 text-muted">&copy;Todos los derechos reservados 2017-2018</p>
+
     </div>
   </div>
 </div>

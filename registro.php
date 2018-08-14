@@ -16,12 +16,12 @@ header( "Location: http://localhost/reservas");
 <title>Sitema Reservas</title>
 </head>
 <body>
-  <div style="height: 95vh;" class="row justify-content-md-center align-items-center">
-    <div class="FormContainer col-md-4 p-3 bg-light text-center">
+  <div style="height: 100vh;" class="row justify-content-md-center align-items-center">
+    <div class="FormContainer col-md-3 p-3 bg-light text-center shadow rounded">
       <div class="form-signin">
         <img class="mb-3" src="assets/logo.png" alt="" width="200" height="200">
-        <input type="text" id="inputName" class="form-control mb-2" placeholder="Nombre de usuario" required>
-        <input type="email" id="inputEmail" class="form-control mb-2" placeholder="Correo electronico" required autofocus>
+        <input type="text" id="inputName" class="form-control mb-2" placeholder="Nombre y apellido" required autofocus>
+        <input type="email" id="inputEmailRegister" class="form-control mb-2" placeholder="Correo electronico" required>
         <input type="password" id="inputPassword" class="form-control mb-2" placeholder="Contraseña" required>
         <input type="password" id="repeatPassword" class="form-control mb-2" placeholder="Repetir Contraseña" required>
 
@@ -29,7 +29,7 @@ header( "Location: http://localhost/reservas");
         <a href="http://localhost/reservas/login" class="btn btn-sm btn-secondary btn-block mt-1">volver</a>
 
 
-        <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+        <p class="mt-5 mb-3 text-muted">&copy;Todos los derechos reservados 2017-2018</p>
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@ header( "Location: http://localhost/reservas");
   function register(){
     var password = $('#inputPassword').val();
     var repeat_password = $('#repeatPassword').val();
-    var email = $('#inputEmail').val();
+    var email = $('#inputEmailRegister').val();
     var name = $('#inputName').val();
 
     if(password != repeat_password){
