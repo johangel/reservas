@@ -4,6 +4,7 @@ session_start();
 
 $sql = "SELECT * FROM specialist_info i INNER JOIN usuarios u ON i.user_id = u.id";
 $result = mysqli_query($conn, $sql);
+$returnArray = [];
 while ($fila = mysqli_fetch_assoc($result)) {
   $returnArray[] = $fila;
 }

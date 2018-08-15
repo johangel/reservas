@@ -23,6 +23,19 @@ body{
   border: 1px solid blue;
 }
 
+.notifcation_box{
+  position: relative;
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 5px;
+}
+
+.notification_button{
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
 .selectableRow:hover{
   cursor: pointer;
   color: #007bff;

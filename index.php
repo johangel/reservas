@@ -109,6 +109,7 @@
   var allSpecialists = []
   var doctor_user_id;
   var specialist_reservations = [];
+  var self_id = <?php echo $_SESSION['userId']; ?>;
 
   $(document).ready( function () {
     getAllSpecialists();
@@ -172,8 +173,12 @@
       type: 'GET',
       url : "http://localhost/reservas/controladores/getSpecialistsReservations?id_specialist="+doctor_user_id,
       success: function(response, status){
-        specialist_reservations = JSON.parse(response);
-        console.log(specialist_reservations);
+        console.log(response);
+        if(response == null){
+          specialist_reservations = [];
+        }else{
+          specialist_reservations = JSON.parse(response);
+        }
         for(var i = 0; i<specialist_reservations.length; i++){
           specialist_reservations[i].title = '';
           specialist_reservations[i].cost = '';

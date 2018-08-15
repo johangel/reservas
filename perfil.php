@@ -96,14 +96,18 @@
     <div class="col-md-6">
       <h3 class="font-weight-light">Reservas del usuario</h3>
       <hr>
+      <div class="row">
+        <div id="notification_container" class="col-md-12">
+
+        </div>
+      </div>
     </div>
   </div>
 
 </div>
 
 <script type="text/javascript">
-
-
+  var typeUser = <?php echo "'".$_SESSION['rol']."';" ?>
   function editUserInfo(evt){
     evt.preventDefault();
     var email = $('#email').val();
@@ -159,8 +163,29 @@
     });
   }
 
+  function getNewReservations(){
+    request = {
+      type_user : typeUser,
+      user_id : <?php echo "'".$_SESSION['userId']."'" ?>
+    }
+    $.ajax({
+      type: 'POST',
+      data: request,
+      url: 'http://localhost/reservas/controladores/getNewReservations.php',
+      success: function(data, status){
+        var newNotifications = JSON.parse(data);
+        console.log(newNotifications);
+        for(var i = 0; i<newNotifications.length; i++){
+          $('#notification_container').append('<div class="notifcation_box mb-2"> <h5>'+newNotifications[i].title+'</h5> <small>Especialista: '+newNotifications[i].specialist+'</small> <br> <small>Hora de reserva: '+moment(newNotifications[i].start).format('LLLL')+'</small> <br> <small>Costo de reserva: '+newNotifications[i].cost+'</small> <br> <button type="button" class="notification_button btn-dark btn btn-sm">Borrar notificacion</button> </div>');
+        }
+      }
+    })
+  }
+
   $(document).ready(function() {
+
     getInfofromUser();
+    getNewReservations();
   })
 </script>
 <?php include 'subcomponents/footer.php'; ?>

@@ -2,7 +2,7 @@
 include '../connection.php';
 session_start();
 $id = $_GET['id_specialist'];
-
+$returnArray = [];
 $sql = "SELECT * FROM reservations WHERE id_specialist = $id";
 $result = mysqli_query($conn,$sql);
 while ($fila = mysqli_fetch_assoc($result)) {

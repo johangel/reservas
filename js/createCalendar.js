@@ -4,11 +4,14 @@
   var ReservationsByCliente;
   var id_reservation;
 
+
+
   $(document).ready(function() {
     $.ajax({
       type: 'GET',
       url : "http://localhost/reservas/controladores/getReservationsByClient.php",
       success: function(data, staus){
+        console.log(JSON.parse(data));
         ReservationsByCliente = JSON.parse(data);
 
         $('#calendar').fullCalendar({
@@ -28,7 +31,7 @@
           forceEventDuration: true,
           eventDurationEditable: false,
           selectOverlap: false,
-          select: function(start) {
+          select: function(start, end) {
             if(!canCreate){
               toastr.error('escoger una especialista antes de realizar una reserva');
               return;
@@ -42,15 +45,19 @@
           },
           eventClick: function(calEvent, jsEvent, view) {
             console.log(moment.locale());
-            $('#DescriptionEdit').val(calEvent.title);
             $('#especilisaEdit').val(calEvent.specialist);
             $('#horaInicio').val(moment(calEvent.start).format('LLLL'));
             $('#horaFinal').val(moment(calEvent.end).format('LLLL'));
-            $('#precioEdit').val(calEvent.Cost);
             console.log(calEvent);
             id_reservation = calEvent.id;
             $(this).css('border-color', 'green');
-            $('#btn_group').removeClass('hidden');
+            $('#btn_group').addClass('hidden');
+            console.log(self_id);
+            if(calEvent.id_client == self_id){
+              $('#DescriptionEdit').val(calEvent.title);
+              $('#btn_group').removeClass('hidden');
+              $('#precioEdit').val(calEvent.Cost);
+            }
           },
           eventLimit: true, // allow "more" link when too many events
           events:ReservationsByCliente,
