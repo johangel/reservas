@@ -19,7 +19,7 @@ $row = mysqli_fetch_array($result);
 
 if(!($row == NULL)){
 
-  if($rol == 'Usuario'){
+  if($rol == 'Usuario' || $rol == 'Administrador'){
       $sqlUpdate = "UPDATE user_info SET rol ='$rol' WHERE user_id='$id'";
       $resultSqlUpdate = mysqli_query($conn, $sqlUpdate);
 

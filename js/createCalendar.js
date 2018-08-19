@@ -3,61 +3,97 @@
   var globalEnd;
   var ReservationsByCliente;
   var id_reservation;
-
+  var url_conditional;
+  var canEdit = true;
+  var canClick = true;
 
 
   $(document).ready(function() {
+    if(rol == 'Especialista'){
+      canEdit = false;
+      canClick = false;
+      url_conditional = "http://localhost/reservas/controladores/getReservationsBySpecialist.php";
+    }else{
+      url_conditional = "http://localhost/reservas/controladores/getReservationsByClient.php";
+    }
+
+    console.log(rol);
+
     $.ajax({
       type: 'GET',
-      url : "http://localhost/reservas/controladores/getReservationsByClient.php",
+      url: url_conditional,
       success: function(data, staus){
         console.log(JSON.parse(data));
         ReservationsByCliente = JSON.parse(data);
-
         $('#calendar').fullCalendar({
           header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,week,agendaDay,listMonth'
           },
-          defaultDate: '2018-03-12',
+          defaultDate: moment(),
           weekNumbers: true,
           navLinks: true, // can click day/week names to navigate views
-          editable: true,
-          selectable: true,
+          editable: canEdit,
+          selectable: canClick,
           allDayDefault: false,
           selectHelper: true,
+          eventOverlap: false,
           defaultTimedEventDuration: '00:30:00',
-          forceEventDuration: true,
+          forceEventDuration: false,
           eventDurationEditable: false,
           selectOverlap: false,
-          select: function(start, end) {
+          select: function(start, end, jsEvent) {
+            var duration = moment.duration(end.diff(start));
+            var hours = duration.asHours();
+            console.log(hours);
+            if(hours > 0.5){
+              toastr.error('no se pueden crear consultas superiores a media hora');
+              return;
+            }
             if(!canCreate){
               toastr.error('escoger una especialista antes de realizar una reserva');
+              console.log(start)
               return;
             }
             Globalstart = start;
-            globalEnd = end;
+            globalEnd = moment(start).add(30, 'minutes');
             $('#FormEvent').modal('show');
-            //   $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            // }
-            // $('#calendar').fullCalendar('unselect');
           },
           eventClick: function(calEvent, jsEvent, view) {
+            console.log(jsEvent)
             console.log(moment.locale());
+            $('#DescriptionEdit').val('');
+            $('#precioEdit').val('');
             $('#especilisaEdit').val(calEvent.specialist);
             $('#horaInicio').val(moment(calEvent.start).format('LLLL'));
             $('#horaFinal').val(moment(calEvent.end).format('LLLL'));
             console.log(calEvent);
             id_reservation = calEvent.id;
-            $(this).css('border-color', 'green');
+            $('.selected').removeClass('selected');
+            $(this).addClass('selected');
             $('#btn_group').addClass('hidden');
             console.log(self_id);
-            if(calEvent.id_client == self_id){
+            if(calEvent.id_client == self_id || rol == 'Especialista'){
               $('#DescriptionEdit').val(calEvent.title);
               $('#btn_group').removeClass('hidden');
-              $('#precioEdit').val(calEvent.Cost);
+              $('#precioEdit').val(calEvent.cost);
             }
+          },
+          eventDrop: function( event, jsEvent, ui, view ){
+            request ={
+              start: moment(event.start).format(),
+              end: moment(event.end).format(),
+              id: event.id
+            };
+            $.ajax({
+              type: 'POST',
+              url: 'http://localhost/reservas/controladores/updateReservationHours.php',
+              data: request,
+              success: function(data, status){
+                toastr.success(data);
+              }
+            })
           },
           eventLimit: true, // allow "more" link when too many events
           events:ReservationsByCliente,

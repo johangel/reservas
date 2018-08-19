@@ -14,7 +14,7 @@ $sql = "UPDATE user_info SET genero='$genero', edad='$age', fecha_nacimiento='$b
 $result = mysqli_query($conn, $sql);
 
 if ($email != ''){
-  
+
 }
 
 if($result){
@@ -22,5 +22,8 @@ if($result){
 }else{
   echo 0;
 }
+
+mysqli_close($conn);
+
 
 ?>

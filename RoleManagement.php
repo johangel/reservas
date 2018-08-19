@@ -5,10 +5,6 @@
 </script>
 <div style="min-height: 95%" class="container mt-4">
 
-  <!-- <div class="row p-2 bg-white shadow-sm rounded">
-    <h2 class="font-weight-light">Gestion de roles</h2>
-  </div> -->
-
   <div class="row justify-content-between mt-3">
     <div class="col-md-12 p-3 bg-white shadow rounded">
       <h4 class="font-weight-light">Lista Usuarios</h4>
@@ -21,14 +17,7 @@
           </tr>
         </thead>
         <tbody id="userTablesBody">
-          <!-- <tr class="selectableRow" onclick="selectUser(event, 'Johangelito')">
-            <td>Johangelito</td>
-            <td>Usuario</td>
-          </tr>
-          <tr class="selectableRow" onclick="selectUser(event, 'Macoisito')">
-            <td>Macoisito</td>
-            <td>Especialista</td>
-          </tr> -->
+
         </tbody>
       </table>
     </div>
@@ -48,6 +37,8 @@
               <option selected disabled>Seleccionar rol</option>
               <option value="Especialista">Especialista</option>
               <option value="Usuario">Usuario</option>
+              <option value="Administrador">Administrador</option>
+
             </select>
           </div>
         </div>
@@ -56,31 +47,26 @@
             <label for="inputState">Area especializacion</label>
             <select id="specializacionField" class="form-control">
               <option selected disabled>Seleccionar area especializacion</option>
-              <option>Especializacion 1</option>
-              <option>Especializacion 2</option>
-              <option>Especializacion 3</option>
+              <option>Neurologia</option>
+              <option>Traumatologia</option>
+              <option>Emergencia</option>
+              <option>Odontologia</option>
+
             </select>
           </div>
 
           <div class="form-row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label for="inputCity">CMD</label>
               <input type="text" class="form-control" id="CMD">
             </div>
 
-            <div class="form-group col-md-4">
-              <label for="inputState">State</label>
-              <select id="inputState" class="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-              </select>
-            </div>
-
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label for="inputZip">Salario por consulta</label>
               <input type="number" class="form-control" id="salary">
             </div>
           </div>
+
           <div class="form-group">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="specialistActive">

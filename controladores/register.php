@@ -20,7 +20,7 @@ $lastid = $row[0];
 $sql_create_userInfo = "INSERT INTO user_info (user_id, rol) VALUES ('$lastid', 'usuario')";
 $result2 = mysqli_query($conn, $sql_create_userInfo);
 
-var_dump($result2);
+echo '1';
 mysqli_close($conn);
 
 ?>

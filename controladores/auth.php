@@ -3,8 +3,8 @@ session_start();
 include '../connection.php';
 $email = $_POST['email'];
 $password = $_POST['password'];
-$sql = "SELECT * FROM usuarios u INNER JOIN user_info i on i.user_id = u.id  WHERE u.correo = '$email' AND clave = '$password'";
 
+$sql = "SELECT * FROM usuarios u INNER JOIN user_info i on i.user_id = u.id  WHERE u.correo = '$email' AND clave = '$password'";
 
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
@@ -18,4 +18,6 @@ if(!($row == null)){
 }else{
   echo 'false';
 }
+mysqli_close($conn);
+
 ?>

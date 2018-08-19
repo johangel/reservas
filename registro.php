@@ -60,7 +60,7 @@ header( "Location: http://localhost/reservas");
       success :function(data, status){
         console.log(data);
         if(data == '1'){
-          window.location.href = "http://localhost/reservas/index.php";
+          window.location.href = "http://localhost/reservas/login.php";
         }else{
         }
 

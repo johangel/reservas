@@ -1,5 +1,8 @@
-<?php include 'subcomponents/header.php'; ?>
-
+<?php include 'subcomponents/header.php';
+if($_SESSION['rol'] == 'Administrador'){
+  header( "Location: http://localhost/reservas/RoleManagement");
+}
+?>
 
 <div style="min-height: 95%" class="container p-4">
   <div class="row p-2 bg-white shadow-sm rounded">
@@ -39,30 +42,40 @@
 
     <div class="col-md-8 p-3">
       <div class=" p-2 row justify-content-between">
-        <h4>Menu Creacion de reservas</h4>
-        <button class="btn btn-sm btn-primary" onclick="clientsReservations()">ver mis reservaciones</button>
+        <h4>Tabla de reservas</h4>
+           <?php  if($_SESSION['rol'] == 'usuario'){
+             echo '<button class="btn btn-sm btn-primary" onclick="clientsReservations()">ver mis reservaciones</button>';
+           }?>
+
       </div>
       <hr>
-      <div class="row mb-4">
-        <div class="form-group col-md-12">
-          <label for="">Area especialista</label>
-          <select class="form-control" id="">
-            <option selected disabled>Escoger una especializacion</option>
-            <option onclick="setSpeciality('Especializacion 1')">Especializacion 1</option>
-            <option onclick="setSpeciality('Especializacion 2')">Especializacion 2</option>
-            <option onclick="setSpeciality('Especializacion 3')">Especializacion 3</option>
 
-          </select>
-        </div>
+       <?php  if($_SESSION['rol'] == 'usuario'){
+         echo '
+         <div class="row mb-4">
+           <div class="form-group col-md-12">
+             <label for="">Area especialista</label>
+             <select onchange="setSpeciality(value)" class="form-control" id="">
+               <option selected disabled>Escoger una especializacion</option>
+               <option value"Neurologia">Neurologia</option>
+               <option value"Traumatologia">Traumatologia</option>
+               <option value"Emergencia">Emergencias</option>
+               <option value"Odontologia">Odontologia</option>
 
-        <div class="form-group  col-md-12">
-          <label for="">Doctores filtrados</label>
-          <select onchange="setDoctor(value)" class="form-control" id="doctorsSelect">
-            <option value="" selected>Selecciona un especialista</option>
-          </select>
-        </div>
 
-      </div>
+             </select>
+           </div>
+
+           <div class="form-group  col-md-12">
+             <label for="">Doctores filtrados</label>
+             <select onchange="setDoctor(value)" class="form-control" id="doctorsSelect">
+               <option value="" selected>Selecciona un especialista</option>
+             </select>
+           </div>
+
+         </div>';
+       }?>
+
       <div id="calendar"></div>
     </div>
 
@@ -110,6 +123,7 @@
   var doctor_user_id;
   var specialist_reservations = [];
   var self_id = <?php echo $_SESSION['userId']; ?>;
+  var rol = <?php echo "'".$_SESSION['rol']."'"; ?>;
 
   $(document).ready( function () {
     getAllSpecialists();
@@ -150,17 +164,18 @@
       url:"http://localhost/reservas/controladores/saveReservation.php",
       data: eventData,
       success: function(data, status){
+        $('#calendar').fullCalendar('renderEvent', eventData); // stick? = true
+        toastr.success('Se creo la reserva con exito');
+        $('#FormEvent').modal('hide');
+        location.reload();
       }
     })
-    $('#calendar').fullCalendar('renderEvent', eventData); // stick? = true
-    toastr.success('Se creo la reserva con exito');
-    $('#FormEvent').modal('hide');
   }
 
   function setSpeciality(value){
     $('#doctorsSelect').find('option').remove().end().append('<option selected>Escoger una especializacion</option>').val('whatever');
     for(var i = 0; i<allSpecialists.length; i++){
-      if(allSpecialists[i].specialistField == value){
+      if(allSpecialists[i].specialistField == value && allSpecialists[i].active == 1){
         doctorsSelect = document.getElementById('doctorsSelect');
         doctorsSelect.options[doctorsSelect.options.length] = new Option('Dr. ' + allSpecialists[i].nombre, allSpecialists[i].user_id);
       }
@@ -180,12 +195,14 @@
           specialist_reservations = JSON.parse(response);
         }
         for(var i = 0; i<specialist_reservations.length; i++){
-          specialist_reservations[i].title = '';
-          specialist_reservations[i].cost = '';
+          if(specialist_reservations[i].id_client == self_id){
+            specialist_reservations[i]['editable'] = true;
+          }else {
+            specialist_reservations[i]['editable'] = false;
+          }
         }
         $('#calendar').fullCalendar('removeEvents');
-        $('#calendar').fullCalendar('renderEvents', specialist_reservations);
-
+        $('#calendar').fullCalendar('renderEvents', specialist_reservations, true);
       }
     })
 
@@ -241,7 +258,7 @@
 
   function clientsReservations(){
     $('#calendar').fullCalendar('removeEvents');
-    $('#calendar').fullCalendar('renderEvents', ReservationsByCliente);
+    $('#calendar').fullCalendar('renderEvents', ReservationsByCliente, true);
   }
 </script>
 

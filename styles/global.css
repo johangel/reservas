@@ -36,7 +36,37 @@ body{
   bottom: 10px;
 }
 
+.img_container{
+  position: relative;
+  text-align: center;
+}
+
 .selectableRow:hover{
   cursor: pointer;
   color: #007bff;
+}
+.hoverProfilePhto{
+  opacity: 1;
+  transition: 0.3s all;
+  height: 200px !important;
+  width: 200px !important;
+}
+
+.message_centered{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+  transition: 0.3s all;
+}
+
+.img_container:hover .hoverProfilePhto{
+  opacity: 0.2;
+  cursor: pointer;
+}
+
+.img_container:hover .message_centered{
+  opacity: 1;
 }

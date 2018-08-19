@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])){
-header( "Location: http://localhost/reservas/login");
+  header( "Location: http://localhost/reservas/login");
 }
 ?>
 <!DOCTYPE html>
@@ -22,17 +22,22 @@ header( "Location: http://localhost/reservas/login");
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="http://localhost/reservas">Reservas <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="http://localhost/reservas/perfil">Personal</a>
-        </li>
-        <li class="nav-item mr-auto">
-          <a class="nav-link" href="http://localhost/reservas/RoleManagement">Gestionar roles</a>
-        </li>
-
-
+        <?php
+          if($_SESSION['rol'] == 'Administrador'){
+            echo '<li class="nav-item mr-auto">
+                    <a class="nav-link" href="http://localhost/reservas/RoleManagement">Gestionar roles</a>
+                  </li>';
+          }else{
+            echo '
+            <li class="nav-item">
+            <a class="nav-link" href="http://localhost/reservas">Reservas <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="http://localhost/reservas/perfil">Personal</a>
+            </li>
+            ';
+          }
+         ?>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">

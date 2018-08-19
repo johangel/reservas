@@ -11,6 +11,17 @@
       <h3 class="font-weight-light">Informacion de usuario</h3>
       <hr>
       <form id="userInfoForm" class="">
+
+        <div class="row mb-4 justify-content-center">
+          <div class="col-md-5">
+            <div class="img_container">
+              <span class="message_centered">Cambiar foto de perfil</span>
+              <img onclick="triggerInputFile()" style="border-radius: 100px;" id="profilePic" alt="..." class="img-thumbnail hoverProfilePhto">
+            </div>
+            <input class="hidden" onchange="setImageProfile(event)" id="inputProfilePhoto" type="file" name="" value="">
+          </div>
+        </div>
+
         <div class="form-group row">
           <label for="inputEmail3" class="col-sm-4 col-form-label">Correo</label>
           <div class="col-sm-8">
@@ -83,7 +94,6 @@
           </div>
         </fieldset>
 
-
         <div class="form-group row">
           <div class="col-sm-8">
             <button type="submit" onclick="editUserInfo(event)" class="btn btn-primary">Editar informacion</button>
@@ -108,6 +118,9 @@
 
 <script type="text/javascript">
   var typeUser = <?php echo "'".$_SESSION['rol']."';" ?>
+  var user_id =  <?php echo "'".$_SESSION['userId']."';" ?>
+  var img_profile = '';
+  var img_profile_name = '';
   function editUserInfo(evt){
     evt.preventDefault();
     var email = $('#email').val();
@@ -159,6 +172,14 @@
         }else{
           $('input:radio[name="genderRadio"]').filter('[value="Mujer"]').attr('checked', true);
         }
+
+        if(!data['profile_img'] == ''){
+          console.log('tiene fotico');
+          $('#profilePic').attr('src','./assets/user_images/'+data['profile_img']);
+        }else{
+          $('#profilePic').attr('src','./assets/user_images/default.jpg');
+
+        }
       }
     });
   }
@@ -166,7 +187,7 @@
   function getNewReservations(){
     request = {
       type_user : typeUser,
-      user_id : <?php echo "'".$_SESSION['userId']."'" ?>
+      user_id : user_id
     }
     $.ajax({
       type: 'POST',
@@ -176,8 +197,60 @@
         var newNotifications = JSON.parse(data);
         console.log(newNotifications);
         for(var i = 0; i<newNotifications.length; i++){
-          $('#notification_container').append('<div class="notifcation_box mb-2"> <h5>'+newNotifications[i].title+'</h5> <small>Especialista: '+newNotifications[i].specialist+'</small> <br> <small>Hora de reserva: '+moment(newNotifications[i].start).format('LLLL')+'</small> <br> <small>Costo de reserva: '+newNotifications[i].cost+'</small> <br> <button type="button" class="notification_button btn-dark btn btn-sm">Borrar notificacion</button> </div>');
+          $('#notification_container').append('<div id="notification' + i +'" class="notifcation_box mb-2"> <h5>'+newNotifications[i].title+'</h5> <small>Especialista: '+newNotifications[i].specialist+'</small> <br> <small>Cliente: '+newNotifications[i].client+'</small> <br> <small>Hora de reserva: '+moment(newNotifications[i].start).format('LLLL')+'</small> <br> <small>Costo de reserva: '+newNotifications[i].cost+'</small> <br> <button type="button" onclick="deleteNotification(notification'+i+', ' + newNotifications[i].id_notification +')" class="notification_button btn-dark btn btn-sm">Borrar notificacion</button> </div>');
         }
+      }
+    })
+  }
+
+  function deleteNotification(notificationBoxId, notification_id){
+    // notificationBoxId.remove();
+    console.log(notification_id);
+    request ={
+      id_notification: notification_id,
+      user_id: user_id
+    };
+    $.ajax({
+      type: 'POST',
+      data: request,
+      url: 'http://localhost/reservas/controladores/deleteNotification.php',
+      success: function(data, status){
+        console.log(data);
+        notificationBoxId.remove();
+        toastr.success('notificacion eliminada');
+      }
+    })
+  }
+
+  function triggerInputFile(){
+    $('#inputProfilePhoto').trigger('click');
+  }
+
+  function setImageProfile(event){
+    var file = document.getElementById('inputProfilePhoto');
+    img_profile_name = file.files[0].name;
+    var e = event;
+    var filereader = new FileReader();
+    filereader.readAsDataURL(file.files[0]);
+    filereader.onload = (e) => {
+      $('#profilePic').attr("src", e.target.result);
+      img_profile =  e.target.result;
+      updatePhotoUser();
+    }
+  }
+
+  function updatePhotoUser(){
+    request ={
+      img: img_profile,
+      id_user: <?php echo "'".$_SESSION['userId']."',"; ?>
+      img_name: img_profile_name
+    }
+    $.ajax({
+      type:'POST',
+      data: request,
+      url:'http://localhost/reservas/controladores/updateProfilePhoto.php',
+      success:function(data, status){
+        toastr.success('La imagen fue cambiada con exito');
       }
     })
   }
