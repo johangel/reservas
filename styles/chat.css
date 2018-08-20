@@ -1,0 +1,65 @@
+.chatWindow{
+  position: fixed;
+  right: 10px;
+  z-index: 1000;
+  bottom: 0px;
+}
+.chat{
+  overflow: hidden;
+  background: white;
+  min-width: 200px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.1);
+}
+
+.chat_header{
+  padding: 5px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  transition: 0.3s all;
+}
+
+.chat_header:hover, .chatUser:hover {
+  cursor: pointer;
+  background: rgba(0, 123, 255, 0.1);
+}
+
+.message{
+  z-index: 1000;
+  position: fixed;
+  right: 230px;
+  width: 250px;
+  height: 300px;
+  background: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.1);
+  bottom: 0px;
+}
+
+.chatMessages{
+  overflow-y: scroll;
+  height: 230px;
+  padding: 5px;
+}
+.message_text{
+  font-size: 12px;
+  background: rgba(0,0,250,0.1);
+  border-radius: 5px;
+  width: 80%;
+}
+
+.selfMessage{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.messageField{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border: 1px solid rgba(0,0,0,0.1);
+  margin: auto;
+  padding: 4px;
+  font-size: 12px;
+}

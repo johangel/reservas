@@ -136,7 +136,6 @@ if($_SESSION['rol'] == 'Administrador'){
       success: function(data, status){
         data =JSON.parse(data);
         allSpecialists = data;
-        console.log(allSpecialists);
       }
     })
   }
@@ -154,8 +153,6 @@ if($_SESSION['rol'] == 'Administrador'){
       specialist: $('#especialista').val(),
       Cost: $('#precio').val()
     };
-
-    // console.log(moment(eventData.start._d).format('LLLL'));
 
     console.log(eventData);
 

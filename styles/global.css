@@ -6,7 +6,10 @@ body{
   background: #E6ECF0;
   overflow-x: hidden !important;
 }
-
+ul{
+  list-style: none;
+  padding: 0;
+}
 .footer{
   position: absolute;
    bottom: 0;
@@ -19,6 +22,9 @@ body{
   display: none;
 }
 
+.height0{
+  height: 0;
+}
 .selected{
   border: 1px solid blue;
 }
@@ -60,6 +66,12 @@ body{
   text-align: center;
   opacity: 0;
   transition: 0.3s all;
+}
+
+.closeBtn{
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 .img_container:hover .hoverProfilePhto{
