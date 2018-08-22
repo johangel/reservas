@@ -19,7 +19,6 @@
   </div>
 
     <ul class="chatMessages" id="chatMessages" class="p-2">
-
     </ul>
     <input type="text" class="messageField" onkeyup="submitMessage(event)" placeholder="escribe un mensaje..">
 </div>
@@ -84,9 +83,9 @@ $(document).ready( function () {
         });
         for(var i= 0; i<data.length; i++){
           if(data[i].receptor_id == <?php echo $_SESSION['userId'] ?>){
-            $('#chatMessages').append('<li class="mb-2 guessMessage message_container"><div class="p-1 message_text">'+ data[i].message_body +'</div></li>');
+            $('#chatMessages').append('<li class="mb-2 guessMessage message_container"><div class="p-1 message_text">'+ data[i].message_body +'<small class="small" style="font-size: 10px; display: block;">'+moment(data[i].time).fromNow()+'</small></div></li>');
           }else{
-            $('#chatMessages').append('<li class="mb-2 selfMessage message_container"><div class="p-1 message_text">'+ data[i].message_body +'</div></li>');
+            $('#chatMessages').append('<li class="mb-2 selfMessage message_container"><div class="p-1 message_text">'+ data[i].message_body +'<small class="small" style="font-size: 10px; display: block;"> '+moment(data[i].time).fromNow()+'</small></div></li>');
           }
         }
       }

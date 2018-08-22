@@ -26,6 +26,9 @@ if (!isset($_SESSION['username'])){
           if($_SESSION['rol'] == 'Administrador'){
             echo '<li class="nav-item mr-auto">
                     <a class="nav-link" href="http://localhost/reservas/RoleManagement">Gestionar roles</a>
+                  </li>
+                  <li class="nav-item mr-auto">
+                    <a class="nav-link" href="http://localhost/reservas/Reports">Reportes</a>
                   </li>';
           }else{
             echo '

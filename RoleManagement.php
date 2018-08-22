@@ -171,9 +171,23 @@ function getAllUsers(){
           // console.log($(this)['0'].children[2].innerHTML);
           selectUser(e,$(this)['0'].children[0].innerHTML, $(this)['0'].children[2].innerHTML);
       });
-      $('#userTables').DataTable();
+      $('#userTables').DataTable({
+        "language": {
+          "lengthMenu": "Mostrar _MENU_ por páginas",
+          "info": "Mostrando página _PAGE_ de _PAGES_",
+          "sSearch":         "Buscar:",
+          "sZeroRecords":    "No se encontraron resultados",
+          "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+          "oPaginate": {
+            "sFirst":    "Primero",
+            "sLast":     "Último",
+            "sNext":     "Siguiente",
+            "sPrevious": "Anterior"
+          },
+        }
+      });
     }
-
   });
 }
 

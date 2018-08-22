@@ -41,14 +41,13 @@ if($_SESSION['rol'] == 'Administrador'){
     </div>
 
     <div class="col-md-8 p-3">
-      <div class=" p-2 row justify-content-between">
+      <div class="pr-3 row justify-content-between">
         <h4>Tabla de reservas</h4>
            <?php  if($_SESSION['rol'] == 'usuario'){
              echo '<button class="btn btn-sm btn-primary" onclick="clientsReservations()">ver mis reservaciones</button>';
            }?>
 
       </div>
-      <hr>
 
        <?php  if($_SESSION['rol'] == 'usuario'){
          echo '
