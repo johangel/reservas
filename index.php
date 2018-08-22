@@ -157,7 +157,7 @@ if($_SESSION['rol'] == 'Administrador'){
 
     $.ajax({
       type:'POST',
-      url:"http://localhost/reservas/controladores/saveReservation.php",
+      url:"http://localhost/reservas/controladores/Reservations/saveReservation.php",
       data: eventData,
       success: function(data, status){
         $('#calendar').fullCalendar('renderEvent', eventData); // stick? = true
@@ -182,7 +182,7 @@ if($_SESSION['rol'] == 'Administrador'){
     doctor_user_id = value;
     $.ajax({
       type: 'GET',
-      url : "http://localhost/reservas/controladores/getSpecialistsReservations?id_specialist="+doctor_user_id,
+      url : "http://localhost/reservas/controladores/Reservations/getSpecialistsReservations?id_specialist="+doctor_user_id,
       success: function(response, status){
         console.log(response);
         if(response == null){
@@ -219,7 +219,7 @@ if($_SESSION['rol'] == 'Administrador'){
 
     $.ajax({
       type: "POST",
-      url : "http://localhost/reservas/controladores/deleteReservation.php",
+      url : "http://localhost/reservas/controladores/Reservations/deleteReservation.php",
       data:  request,
       success: function(response, status){
         console.log(response)
@@ -245,7 +245,7 @@ if($_SESSION['rol'] == 'Administrador'){
     $.ajax({
       type: "POST",
       data : request,
-      url : "http://localhost/reservas/controladores/updateReservation.php",
+      url : "http://localhost/reservas/controladores/Reservations/updateReservation.php",
       success: function(response, status){
         toastr.success('se edito la reserva con exito');
       }

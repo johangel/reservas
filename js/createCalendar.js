@@ -12,9 +12,9 @@
     if(rol == 'Especialista'){
       canEdit = false;
       canClick = false;
-      url_conditional = "http://localhost/reservas/controladores/getReservationsBySpecialist.php";
+      url_conditional = "http://localhost/reservas/controladores/Reservations/getReservationsBySpecialist.php";
     }else{
-      url_conditional = "http://localhost/reservas/controladores/getReservationsByClient.php";
+      url_conditional = "http://localhost/reservas/controladores/Reservations/getReservationsByClient.php";
     }
 
     console.log(rol);

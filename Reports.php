@@ -29,78 +29,85 @@
 </div>
 
 <script src="js/chart.js" type="text/javascript"></script>
-<script type="text/javascript">
+<script type="module">
+import {FieldsModel} from './js/models/specialistFields.js';
+var specialistField = [];
 
   $(document).ready( function () {
+    specialistField = FieldsModel.setFields();
     LoadChart();
   });
-function LoadChart(){
-  request ={
-    type: 'something'
-  };
-  $.ajax({
-    type: 'GET',
-    data: request,
-    url: 'http://localhost/reservas/controladores/reportsGenerator.php',
-    success: function(data, status){
-      data = JSON.parse(data);
-      dataReport = [];
-      nombreEtiqueta = ['Neurologia', 'Traumatologia', 'Emergencias', 'Odontologia'];
-      dataSet = [];
-      var contador = 0;
 
-      //sacando data para cada cabecera
-      for(var i =0; i<nombreEtiqueta.length; i++){
-        contador = 0;
-        for(var j = 0; j<data.length; j++){
-          if(data[j].specialistField == nombreEtiqueta[i]){
-            contador = contador + 1;
-            console.log(nombreEtiqueta[i])
-          }
-          dataReport[i] = contador;
-        }
-      }
+  // FieldsModel.setField();
 
-      console.log(dataReport);
+  function LoadChart(){
+    request ={
+      type: 'something'
+    };
+    $.ajax({
+      type: 'GET',
+      data: request,
+      url: 'http://localhost/reservas/controladores/reportsGenerator.php',
+      success: function(data, status){
+        var data = JSON.parse(data);
+        var dataReport = [];
+        var nombreEtiqueta =specialistField;
+        var dataSet = [];
+        var contador = 0;
+        // console.log(FieldsModel.setField());
 
-      console.log(nombreEtiqueta);
-
-      var ctx = document.getElementById('myChart').getContext('2d');
-      var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'bar',
-
-        // The data for our dataset
-        data: {
-          labels: nombreEtiqueta,
-          datasets: [{
-            label: "Cantidad de reservaciones por especializacion",
-            backgroundColor: 'rgba(81,173,243,0.2)',
-            borderColor: 'rgba(81,173,243)',
-            borderWidth: 1,
-            data: dataReport,
-          }],
-          options: {
-            scales: {
-              yAxes: [{
-                ticks: {
-                  min: 0,
-                }
-              }]
-            },
-            legend: {
-              display: true,
+        //sacando data para cada cabecera
+        for(var i =0; i<nombreEtiqueta.length; i++){
+          contador = 0;
+          for(var j = 0; j<data.length; j++){
+            if(data[j].specialistField == nombreEtiqueta[i]){
+              contador = contador + 1;
+              console.log(nombreEtiqueta[i])
             }
+            dataReport[i] = contador;
           }
-        },
+        }
 
-        // Configuration options go here
-        options: {}
-      });
-      console.log(data);
-    }
-  })
-}
+        // console.log(dataReport);
+        //
+        // console.log(nombreEtiqueta);
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        var chart = new Chart(ctx, {
+          // The type of chart we want to create
+          type: 'bar',
+
+          // The data for our dataset
+          data: {
+            labels: nombreEtiqueta,
+            datasets: [{
+              label: "Cantidad de reservaciones por especializacion",
+              backgroundColor: 'rgba(81,173,243,0.2)',
+              borderColor: 'rgba(81,173,243)',
+              borderWidth: 1,
+              data: dataReport,
+            }],
+            options: {
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    min: 0,
+                  }
+                }]
+              },
+              legend: {
+                display: true,
+              }
+            }
+          },
+
+          // Configuration options go here
+          options: {}
+        });
+      }
+    })
+  }
 </script>
 
 <?php include 'subcomponents/footer.php'; ?>

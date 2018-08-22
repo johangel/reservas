@@ -1,5 +1,6 @@
 <?php
-include '../connection.php';
+include '../../connection.php';
+
 session_start();
 $start = $_POST['start'];
 $end = $_POST['end'];

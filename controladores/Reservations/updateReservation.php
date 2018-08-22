@@ -1,5 +1,6 @@
 <?php
-include '../connection.php';
+include '../../connection.php';
+
 session_start();
 $title = $_POST['title'];
 $id_reservation = $_POST['id_reservation'];

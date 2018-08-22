@@ -1,11 +1,10 @@
 <?php
-include '../connection.php';
-session_start();
+include '../../connection.php';
 
-$specialist_id = $_SESSION['userId'];
-$returnArray = [];
-$sql = "SELECT * FROM reservations WHERE id_specialist = '$specialist_id'";
+session_start();
+$sql ="SELECT * FROM specialist_Field";
 $result = mysqli_query($conn, $sql);
+$returnArray = [];
 while ($fila = mysqli_fetch_assoc($result)) {
   $returnArray[] = $fila;
 }

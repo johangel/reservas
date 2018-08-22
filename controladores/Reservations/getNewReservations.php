@@ -1,5 +1,6 @@
 <?php
-include '../connection.php';
+include '../../connection.php';
+
 session_start();
 
 $type_user = $_POST['type_user'];
