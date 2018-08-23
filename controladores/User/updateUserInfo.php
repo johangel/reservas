@@ -1,5 +1,5 @@
 <?php
-include '../connection.php';
+include '../../connection.php';
 session_start();
 $email = $_POST['email'];
 $age = $_POST['age'];

@@ -1,5 +1,5 @@
 <?php
-include '../connection.php';
+include '../../connection.php';
 session_start();
 
 $id_notification = $_POST['id_notification'];

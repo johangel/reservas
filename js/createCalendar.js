@@ -88,7 +88,7 @@
             };
             $.ajax({
               type: 'POST',
-              url: 'http://localhost/reservas/controladores/updateReservationHours.php',
+              url: 'http://localhost/reservas/controladores/Reservations/updateReservationHours.php',
               data: request,
               success: function(data, status){
                 toastr.success(data);

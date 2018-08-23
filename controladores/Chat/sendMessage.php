@@ -1,5 +1,5 @@
 <?php
-include '../connection.php';
+include '../../connection.php';
 session_Start();
 $message = $_POST['message'];
 $time = $_POST['time'];

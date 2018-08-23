@@ -65,7 +65,7 @@ if (!isset($_SESSION['username'])){
 
       $.ajax({
         type: "GET",
-        url : "http://localhost/reservas/controladores/logout.php",
+        url : "http://localhost/reservas/controladores/Auth/logout.php",
         success :function(data ,status){
           window.location.href = "http://localhost/reservas/login.php";
         }

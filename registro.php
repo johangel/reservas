@@ -55,7 +55,7 @@ header( "Location: http://localhost/reservas");
 
     $.ajax({
       type: "POST",
-      url : "http://localhost/reservas/controladores/register.php",
+      url : "http://localhost/reservas/controladores/Auth/register.php",
       data: request,
       success :function(data, status){
         console.log(data);

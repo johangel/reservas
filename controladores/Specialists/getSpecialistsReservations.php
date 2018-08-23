@@ -1,5 +1,5 @@
 <?php
-include '../connection.php';
+include '../../connection.php';
 session_start();
 $id = $_GET['id_specialist'];
 $returnArray = [];

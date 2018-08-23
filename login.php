@@ -49,7 +49,7 @@ header( "Location: http://localhost/reservas");
         }
       },
       type: "POST",
-      url : "http://localhost/reservas/controladores/auth.php",
+      url : "http://localhost/reservas/controladores/Auth/auth.php",
       data: request,
       success :function(data, status){
         console.log(data);

@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include '../connection.php';
+include '../../connection.php';
 
 $user_id = $_GET['id'];
 

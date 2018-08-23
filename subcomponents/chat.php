@@ -38,7 +38,7 @@ $(document).ready( function () {
 
     $.ajax({
       type:'GET',
-      url:"http://localhost/reservas/controladores/getSpecialistFromClient.php",
+      url:"http://localhost/reservas/controladores/Specialists/getSpecialistFromClient.php",
       data: request,
       success: function(data, status){
         data =JSON.parse(data);
@@ -74,7 +74,7 @@ $(document).ready( function () {
     $.ajax({
       type:'GET',
       data: request,
-      url:"http://localhost/reservas/controladores/getMessages.php",
+      url:"http://localhost/reservas/controladores/Chat/getMessages.php",
       success: function(data, status){
         $('.message_container').remove();
         data = JSON.parse(data)
@@ -114,7 +114,7 @@ $(document).ready( function () {
       $.ajax({
         type:'POST',
         data:request,
-        url:"http://localhost/reservas/controladores/sendMessage.php",
+        url:"http://localhost/reservas/controladores/Chat/sendMessage.php",
         success:function(data, status){
           console.log(data);
           event.target.value = "";

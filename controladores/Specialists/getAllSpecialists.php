@@ -1,5 +1,5 @@
 <?php
-include '../connection.php';
+include '../../connection.php';
 session_start();
 
 $sql = "SELECT * FROM specialist_info i INNER JOIN usuarios u ON i.user_id = u.id";

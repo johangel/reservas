@@ -54,13 +54,8 @@ if($_SESSION['rol'] == 'Administrador'){
          <div class="row mb-4">
            <div class="form-group col-md-12">
              <label for="">Area especialista</label>
-             <select onchange="setSpeciality(value)" class="form-control" id="">
+             <select id="specialFieldSelecet" onchange="setSpeciality(value)" class="form-control" id="">
                <option selected disabled>Escoger una especializacion</option>
-               <option value"Neurologia">Neurologia</option>
-               <option value"Traumatologia">Traumatologia</option>
-               <option value"Emergencia">Emergencias</option>
-               <option value"Odontologia">Odontologia</option>
-
 
              </select>
            </div>
@@ -115,23 +110,26 @@ if($_SESSION['rol'] == 'Administrador'){
 </div>
 
 <script src="js/createCalendar.js"></script>
-
+<script src="js/models/specialistFields.js"></script>
 <script type="text/javascript">
-
-  var allSpecialists = []
+  var allSpecialFields = [];
+  var allSpecialists = [];
   var doctor_user_id;
   var specialist_reservations = [];
   var self_id = <?php echo $_SESSION['userId']; ?>;
   var rol = <?php echo "'".$_SESSION['rol']."'"; ?>;
 
   $(document).ready( function () {
+    allSpecialFields = FieldsModel.setFields();
+    console.log(allSpecialFields);
     getAllSpecialists();
+    setSpecialFields();
   });
 
   function getAllSpecialists(){
     $.ajax({
       type: 'GET',
-      url : "http://localhost/reservas/controladores/getAllSpecialists.php",
+      url : "http://localhost/reservas/controladores/Specialists/getAllSpecialists.php",
       success: function(data, status){
         data =JSON.parse(data);
         allSpecialists = data;
@@ -253,6 +251,12 @@ if($_SESSION['rol'] == 'Administrador'){
   function clientsReservations(){
     $('#calendar').fullCalendar('removeEvents');
     $('#calendar').fullCalendar('renderEvents', ReservationsByCliente, true);
+  }
+
+  function setSpecialFields(){
+    for (var i = 0; i<allSpecialFields.length; i++){
+      $('#specialFieldSelecet').append(' <option value"'+allSpecialFields[i].Name+'">'+allSpecialFields[i].Name+'</option>')
+    }
   }
 </script>
 

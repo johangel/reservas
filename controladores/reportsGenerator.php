@@ -2,7 +2,7 @@
 include '../connection.php';
 session_start();
 
-$typeOfReport = $_GET['type'];
+// $typeOfReport = $_GET['type'];
 
 $sql ="SELECT * FROM reservations r INNER JOIN specialist_info s ON r.id_specialist = s.user_id";
 $result = mysqli_query($conn, $sql);

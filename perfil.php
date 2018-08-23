@@ -141,7 +141,7 @@
 
     $.ajax({
       type: "POST",
-      url : "http://localhost/reservas/controladores/updateUserInfo.php",
+      url : "http://localhost/reservas/controladores/User/updateUserInfo.php",
       data: request,
       success :function(data, status){
         if(data == 1){
@@ -157,7 +157,7 @@
   function getInfofromUser(){
     $.ajax({
       type: "GET",
-      url : "http://localhost/reservas/controladores/getUserInfo.php?id=<?php echo $_SESSION['userId']; ?>",
+      url : "http://localhost/reservas/controladores/User/getUserInfo.php?id=<?php echo $_SESSION['userId']; ?>",
       success :function(data, status){
         data = JSON.parse(data);
         console.log(data);
@@ -192,7 +192,7 @@
     $.ajax({
       type: 'POST',
       data: request,
-      url: 'http://localhost/reservas/controladores/getNewReservations.php',
+      url: 'http://localhost/reservas/controladores/Reservations/getNewReservations.php',
       success: function(data, status){
         var newNotifications = JSON.parse(data);
         console.log(newNotifications);
@@ -213,7 +213,7 @@
     $.ajax({
       type: 'POST',
       data: request,
-      url: 'http://localhost/reservas/controladores/deleteNotification.php',
+      url: 'http://localhost/reservas/controladores/User/deleteNotification.php',
       success: function(data, status){
         console.log(data);
         notificationBoxId.remove();
@@ -248,7 +248,7 @@
     $.ajax({
       type:'POST',
       data: request,
-      url:'http://localhost/reservas/controladores/updateProfilePhoto.php',
+      url:'http://localhost/reservas/controladores/User/updateProfilePhoto.php',
       success:function(data, status){
         toastr.success('La imagen fue cambiada con exito');
       }

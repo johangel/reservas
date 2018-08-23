@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../connection.php';
+include '../../connection.php';
 
 $sql = "SELECT * FROM user_info i INNER JOIN usuarios u ON i.user_id = u.id";
 $result = mysqli_query($conn, $sql);
