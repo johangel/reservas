@@ -29,16 +29,15 @@
 </div>
 
 <script src="js/chart.js" type="text/javascript"></script>
-<script type="module">
-import {FieldsModel} from './js/models/specialistFields.js';
-var specialistField = [];
+<script type="text/javascript" src="./js/models/specialistFields.js"></script>
+
+<script type="text/javascript">
+  var specialistField = [];
 
   $(document).ready( function () {
     specialistField = FieldsModel.setFields();
     LoadChart();
   });
-
-  // FieldsModel.setField();
 
   function LoadChart(){
     request ={
@@ -51,10 +50,14 @@ var specialistField = [];
       success: function(data, status){
         var data = JSON.parse(data);
         var dataReport = [];
-        var nombreEtiqueta =specialistField;
+        var nombreEtiqueta = [];
         var dataSet = [];
         var contador = 0;
-        // console.log(FieldsModel.setField());
+
+        // asignando nombre de especialidades a array
+        for(var i= 0; i<specialistField.length;i++){
+          nombreEtiqueta.push(specialistField[i].Name);
+        }
 
         //sacando data para cada cabecera
         for(var i =0; i<nombreEtiqueta.length; i++){

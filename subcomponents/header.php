@@ -29,6 +29,9 @@ if (!isset($_SESSION['username'])){
                   </li>
                   <li class="nav-item mr-auto">
                     <a class="nav-link" href="http://localhost/reservas/Reports">Reportes</a>
+                  </li>
+                  <li class="nav-item mr-auto">
+                    <a class="nav-link" href="http://localhost/reservas/FieldsManagement">Especialidades</a>
                   </li>';
           }else{
             echo '

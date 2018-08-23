@@ -9,7 +9,7 @@ var FieldsModel = {
       success:function(data, status){
         data = JSON.parse(data);
         for(var i=0; i<data.length; i++){
-          fields.push(data[i].name);
+          fields.push(data[i]);
         }
       }
     })
@@ -27,7 +27,7 @@ var FieldsModel = {
       url : "http://localhost/reservas/controladores/specialistField/createSpecialistField.php",
       success: function(data, status){
          console.log(data);
-         toastr.success('especializacion creada con exito');
+         location.reload();
       }
    })
   },
@@ -42,10 +42,9 @@ var FieldsModel = {
       data:request,
       url : "http://localhost/reservas/controladores/specialistField/deleteSpecialistField.php",
       success: function(data, status){
-         console.log(data);
+        location.reload();
       }
    })
   }
-}
 
-export {FieldsModel};
+}

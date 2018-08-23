@@ -161,8 +161,6 @@ if($_SESSION['rol'] == 'Administrador'){
       data: eventData,
       success: function(data, status){
         $('#calendar').fullCalendar('renderEvent', eventData); // stick? = true
-        toastr.success('Se creo la reserva con exito');
-        $('#FormEvent').modal('hide');
         location.reload();
       }
     })

@@ -1,8 +1,6 @@
 <?php include 'subcomponents/header.php'; ?>
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js">
-
-</script>
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <div style="min-height: 95%" class="container mt-4">
 
   <div class="row justify-content-between mt-3">
@@ -51,7 +49,6 @@
               <option>Traumatologia</option>
               <option>Emergencia</option>
               <option>Odontologia</option>
-
             </select>
           </div>
 
