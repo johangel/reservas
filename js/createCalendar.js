@@ -6,7 +6,11 @@
   var url_conditional;
   var canEdit = true;
   var canClick = true;
-
+  var businessHoursGlobal =  {
+    dow: [ 1, 2, 3, 4, 5, 6],
+    start: '8:00',
+    end: '17:00'
+  }
 
   $(document).ready(function() {
     if(rol == 'Especialista'){
@@ -97,18 +101,14 @@
           },
           eventLimit: true, // allow "more" link when too many events
           events:ReservationsByCliente,
-          businessHours: {
-            dow: [ 1, 2, 3, 4, 5, 6],
-            start: '8:00',
-            end: '17:00'
-          },
+          businessHours: businessHoursGlobal,
           validRange: function(nowDate) {
             return {
               // start: yesterdayDate,
               end: nowDate.clone().add(1, 'months')
             };
           },
-          selectConstraint :"businessHours"
+          // selectConstraint :'businessHours'
           });
 
       }

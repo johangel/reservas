@@ -15,8 +15,7 @@ $row = mysqli_fetch_array($result);
 while ($fila = mysqli_fetch_row($result)) {
   $returnArray[] = $fila[0];
 }
-$returnArray = array_unique($returnArray);
-
+$returnArray = array_keys(array_count_values($returnArray));
 for($i = 0; $i<sizeof($returnArray); $i++){
   $idToLook = $returnArray[$i];
   $sql = "SELECT nombre, id from usuarios WHERE id = '$idToLook'";
@@ -30,4 +29,6 @@ for($i = 0; $i<sizeof($returnArray); $i++){
 }
 
 echo $arraySpecialist;
+mysqli_close($conn);
+
 ?>

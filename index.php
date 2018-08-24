@@ -178,14 +178,24 @@ if($_SESSION['rol'] == 'Administrador'){
     doctor_user_id = value;
     $.ajax({
       type: 'GET',
-      url : "http://localhost/reservas/controladores/Reservations/getSpecialistsReservations?id_specialist="+doctor_user_id,
+      url : "http://localhost/reservas/controladores/Specialists/getSpecialistsReservations?id_specialist="+doctor_user_id,
       success: function(response, status){
-        console.log(response);
-        if(response == null){
+
+        response = JSON.parse(response);
+        if(response.reservas == null){
           specialist_reservations = [];
         }else{
-          specialist_reservations = JSON.parse(response);
+          specialist_reservations = response.reservas;
         }
+
+        $('#calendar').fullCalendar('option', {
+          businessHours:{
+            dow: JSON.parse("[" +response.specilist_info.days +"]"),
+            start: response.specilist_info.hoursFrom,
+            end: response.specilist_info.hoursTo
+          }
+        })
+
         for(var i = 0; i<specialist_reservations.length; i++){
           if(specialist_reservations[i].id_client == self_id){
             specialist_reservations[i]['editable'] = true;
@@ -196,6 +206,7 @@ if($_SESSION['rol'] == 'Administrador'){
         $('#calendar').fullCalendar('removeEvents');
         $('#calendar').fullCalendar('renderEvents', specialist_reservations, true);
       }
+
     })
 
     console.log(doctor_user_id);
@@ -257,6 +268,13 @@ if($_SESSION['rol'] == 'Administrador'){
     for (var i = 0; i<allSpecialFields.length; i++){
       $('#specialFieldSelecet').append(' <option value"'+allSpecialFields[i].Name+'">'+allSpecialFields[i].Name+'</option>')
     }
+  }
+
+  function changeBussinesHours(){
+    console.log('epa');
+      $('#calendar').fullCalendar('option', {
+        businessHours: businessHoursGlobal
+      })
   }
 </script>
 

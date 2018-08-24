@@ -8,6 +8,9 @@ $specialistField = $_POST['specializacionField'];
 $cmd = $_POST['cmd'];
 $salary = $_POST['salary'];
 $rol = $_POST['rol'];
+$daysArray = $_POST['daysArray'];
+$from = $_POST['from'];
+$to = $_POST['to'];
 
 
 $sql = "SELECT id from specialist_info WHERE user_id = '$id'";
@@ -28,7 +31,7 @@ if(!($row == NULL)){
 
     }else if($rol == 'Especialista'){
 
-      $sqlUpdate = "UPDATE specialist_info SET active='$active', specialistField='$specialistField', cmd='$cmd', salary='$salary' WHERE user_id='$id'";
+      $sqlUpdate = "UPDATE specialist_info SET active='$active', specialistField='$specialistField', cmd='$cmd', salary='$salary', days='$daysArray', hoursFrom='$from', hoursTo='$to' WHERE user_id='$id'";
       $resultSqlUpdate = mysqli_query($conn, $sqlUpdate);
 
     }
@@ -40,8 +43,8 @@ if(!($row == NULL)){
   $sqlUpdate = "UPDATE user_info SET rol ='$rol' WHERE user_id='$id'";
   $resultSqlUpdate = mysqli_query($conn, $sqlUpdate);
 
-  $sqlCreate = "INSERT INTO specialist_info (user_id, active, cmd, salary, specialistField)
-  VALUES('$id', '$active', '$cmd', '$salary', '$specialistField')";
+  $sqlCreate = "INSERT INTO specialist_info (user_id, active, cmd, salary, specialistField, days, hoursFrom, hoursTo)
+  VALUES('$id', '$active', '$cmd', '$salary', '$specialistField', '$daysArray', '$from', 'hoursTo')";
 
   // echo $sqlCreate;
 
