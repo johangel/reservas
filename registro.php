@@ -34,7 +34,9 @@ header( "Location: http://localhost/reservas");
     </div>
   </div>
 
+<script type="text/javascript" src="js/models/auth.js"></script>
 <script type="text/javascript">
+
   function register(){
     var password = $('#inputPassword').val();
     var repeat_password = $('#repeatPassword').val();
@@ -53,20 +55,7 @@ header( "Location: http://localhost/reservas");
       password:password
     }
 
-    $.ajax({
-      type: "POST",
-      url : "http://localhost/reservas/controladores/Auth/register.php",
-      data: request,
-      success :function(data, status){
-        console.log(data);
-        if(data == '1'){
-          window.location.href = "http://localhost/reservas/login.php";
-        }else{
-        }
-
-      }
-    });
-
+    authModel.register(request);
   }
 </script>
 <?php include 'subcomponents/footer.php'; ?>

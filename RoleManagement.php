@@ -161,52 +161,23 @@
 
 
 </div>
+<script type="text/javascript" src="js/models/Users.js"></script>
 <script src="js/models/specialistFields.js"></script>
+<script type="text/javascript" src="js/models/specialist"></script>
 <script type="text/javascript">
   var allSpecialFields = [];
   var user_id;
   var row_table;
   $(document).ready( function () {
     allSpecialFields = FieldsModel.setFields();
-    getAllUsers();
+    userModel.setUserInTable();
     setSpecialFields();
   } );
 
   function selectUser(event, name, id){
     user_id = id;
     row_table = event.target.parentElement.children[1];
-    $.ajax({
-      type:'GET',
-      url : "http://localhost/reservas/controladores/Specialists/getSpecialistInfo?id="+id,
-      success: function(data, status){
-        if(data == 'false'){
-          $('#optionsContainer').addClass('hidden');
-          $('#rol').val('Usuario');
-          $('#CMD').val('');
-          $('#salary').val('');
-          $('#specializacionField').val('');
-          $('#specialistActive')['0'].checked = false;
-
-        }else{
-          var specialist = {}
-           specialist = JSON.parse(data);
-           $('#optionsContainer').removeClass('hidden');
-           $('#CMD').val(specialist['cmd']);
-           $('#rol').val('Especialista');
-           $('#salary').val(specialist['salary']);
-           $('#specializacionField').val(specialist['specialistField']);
-           if(specialist['active'] == 1){
-             $('#specialistActive')['0'].checked = true;
-           }else{
-             $('#specialistActive')['0'].checked = false;
-           }
-        }
-
-        $('#userName').val(name);
-        $('.selected').removeClass('selected');
-        event.target.parentElement.classList.add('selected');
-      }
-    });
+    Specialists.selectSpecialist(event, name,user_id);
   }
 
   function showRoleOptions(value){
@@ -221,56 +192,6 @@
     }
   }
 
-  function getAllUsers(){
-
-    $.ajax({
-      type: "GET",
-      url : "http://localhost/reservas/controladores/User/getAllUsers.php",
-      datatype:'json',
-
-      success :function(data, status){
-        data = JSON.parse(data);
-        var table = document.getElementById("userTablesBody");
-        var cell1;
-        var cell2;
-        var row;
-
-        for(var i = 0; i <data.length; i++ ){
-          row = table.insertRow(i);
-          var name = data[i].nombre;
-          row.className='selectableRow';
-          cell1 = row.insertCell(0);
-          cell2 = row.insertCell(1);
-          cell3 = row.insertCell(2);
-          cell1.innerHTML = data[i].nombre;
-          cell2.innerHTML = data[i].rol;
-          cell3.innerHTML = data[i].user_id;
-          row = null;
-        }
-
-        $("#userTablesBody").on('click','tr',function(e) {
-            // console.log($(this)['0'].children[2].innerHTML);
-            selectUser(e,$(this)['0'].children[0].innerHTML, $(this)['0'].children[2].innerHTML);
-        });
-        $('#userTables').DataTable({
-          "language": {
-            "lengthMenu": "Mostrar _MENU_ por páginas",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "sSearch":         "Buscar:",
-            "sZeroRecords":    "No se encontraron resultados",
-            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-            "oPaginate": {
-              "sFirst":    "Primero",
-              "sLast":     "Último",
-              "sNext":     "Siguiente",
-              "sPrevious": "Anterior"
-            },
-          }
-        });
-      }
-    });
-  }
 
   function updateSpecialistInfo(evt){
 
@@ -307,16 +228,7 @@
     }
 
     console.log(request);
-
-    $.ajax({
-      type: "POST",
-      url : "http://localhost/reservas/controladores/Specialists/updateSpecialistInfo.php",
-      data: request,
-      success :function(data, status){
-        toastr.success(data);
-        row_table.innerHTML = rol;
-      }
-    });
+    Specialists.updateSpecialistInfo(request);
 
   }
 

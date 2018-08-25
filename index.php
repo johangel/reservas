@@ -111,6 +111,7 @@ if($_SESSION['rol'] == 'Administrador'){
 
 <script src="js/createCalendar.js"></script>
 <script src="js/models/specialistFields.js"></script>
+<script src="js/models/Specialist.js"></script>
 <script type="text/javascript">
   var allSpecialFields = [];
   var allSpecialists = [];
@@ -121,21 +122,9 @@ if($_SESSION['rol'] == 'Administrador'){
 
   $(document).ready( function () {
     allSpecialFields = FieldsModel.setFields();
-    console.log(allSpecialFields);
-    getAllSpecialists();
+    allSpecialists = Specialists.getAllSpecialists();
     setSpecialFields();
   });
-
-  function getAllSpecialists(){
-    $.ajax({
-      type: 'GET',
-      url : "http://localhost/reservas/controladores/Specialists/getAllSpecialists.php",
-      success: function(data, status){
-        data =JSON.parse(data);
-        allSpecialists = data;
-      }
-    })
-  }
 
   function crearReserva(){
     var eventData;
@@ -176,40 +165,8 @@ if($_SESSION['rol'] == 'Administrador'){
 
   function setDoctor(value){
     doctor_user_id = value;
-    $.ajax({
-      type: 'GET',
-      url : "http://localhost/reservas/controladores/Specialists/getSpecialistsReservations?id_specialist="+doctor_user_id,
-      success: function(response, status){
+    Specialists.setDoctorForReservation(doctor_user_id)
 
-        response = JSON.parse(response);
-        if(response.reservas == null){
-          specialist_reservations = [];
-        }else{
-          specialist_reservations = response.reservas;
-        }
-
-        $('#calendar').fullCalendar('option', {
-          businessHours:{
-            dow: JSON.parse("[" +response.specilist_info.days +"]"),
-            start: response.specilist_info.hoursFrom,
-            end: response.specilist_info.hoursTo
-          }
-        })
-
-        for(var i = 0; i<specialist_reservations.length; i++){
-          if(specialist_reservations[i].id_client == self_id){
-            specialist_reservations[i]['editable'] = true;
-          }else {
-            specialist_reservations[i]['editable'] = false;
-          }
-        }
-        $('#calendar').fullCalendar('removeEvents');
-        $('#calendar').fullCalendar('renderEvents', specialist_reservations, true);
-      }
-
-    })
-
-    console.log(doctor_user_id);
     for(var i = 0; i<allSpecialists.length; i++){
       if(allSpecialists[i].user_id == doctor_user_id){
         $('#especialista').val(allSpecialists[i].nombre);
@@ -266,7 +223,7 @@ if($_SESSION['rol'] == 'Administrador'){
 
   function setSpecialFields(){
     for (var i = 0; i<allSpecialFields.length; i++){
-      $('#specialFieldSelecet').append(' <option value"'+allSpecialFields[i].Name+'">'+allSpecialFields[i].Name+'</option>')
+      $('#specialFieldSelecet').append('<option value"'+allSpecialFields[i].Name+'">'+allSpecialFields[i].Name+'</option>')
     }
   }
 

@@ -76,6 +76,7 @@
 
 
 <script type="text/javascript" src="./js/models/specialistFields.js"></script>
+
 <script type="text/javascript">
 
   var listaEspecialidades = [];

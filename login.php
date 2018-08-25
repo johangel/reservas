@@ -22,6 +22,7 @@ header( "Location: http://localhost/reservas");
     <div class="form-signin">
       <img class="mb-3" src="assets/logo.png" alt="" width="200" height="200">
       <h1 class="h3 mb-3 font-weight-normal">Ingresa con tus crendeciales</h1>
+
       <input type="email" id="inputEmail" class="form-control mb-1" placeholder="Correo electronico" required autofocus>
       <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
 
@@ -33,34 +34,16 @@ header( "Location: http://localhost/reservas");
     </div>
   </div>
 </div>
+
+<script type="text/javascript" src="js/models/auth.js"></script>
 <script type="text/javascript">
   function login(){
-    console.log('aja')
 
     var request={
-      email:$('#inputEmail').val(),
+      email: $('#inputEmail').val(),
       password:$('#inputPassword').val()
     }
-
-    $.ajax({
-      statusCode: {
-        500: function() {
-          toastr.error('Credenciales del usuario no coinciden');
-        }
-      },
-      type: "POST",
-      url : "http://localhost/reservas/controladores/Auth/auth.php",
-      data: request,
-      success :function(data, status){
-        console.log(data);
-        if(data == 'true'){
-          window.location.href = "http://localhost/reservas/index.php";
-        }else{
-          toastr.error('Error de credenciales');
-        }
-
-      }
-    });
+    authModel.login(request);
   }
 </script>
 <?php include 'subcomponents/footer.php'; ?>
