@@ -6,11 +6,7 @@
   var url_conditional;
   var canEdit = true;
   var canClick = true;
-  var businessHoursGlobal =  {
-    dow: [ 1, 2, 3, 4, 5, 6],
-    start: '8:00',
-    end: '17:00'
-  }
+  var businessHoursGlobal =  {}
 
   $(document).ready(function() {
     if(rol == 'Especialista'){
@@ -53,33 +49,41 @@
             console.log(hours);
             if(hours > 0.5){
               toastr.error('no se pueden crear consultas superiores a media hora');
+              $('#calendar').fullCalendar('unselect');
               return;
             }
             if(!canCreate){
               toastr.error('escoger una especialista antes de realizar una reserva');
+              $('#calendar').fullCalendar('unselect');
               console.log(start)
               return;
+            }
+            if(start.isBefore(moment().subtract(3, 'hours'))) {
+              console.log(start);
+              console.log(moment());
+              toastr.error('No pueden ser seleccionadas fechas pasadas');
+              $('#calendar').fullCalendar('unselect');
+              return false;
             }
             Globalstart = start;
             globalEnd = moment(start).add(30, 'minutes');
             $('#FormEvent').modal('show');
           },
           eventClick: function(calEvent, jsEvent, view) {
-            console.log(jsEvent)
-            console.log(moment.locale());
+            $('#DescriptionEdit').prop("readonly",true);
             $('#DescriptionEdit').val('');
             $('#precioEdit').val('');
             $('#especilisaEdit').val(calEvent.specialist);
             $('#horaInicio').val(moment(calEvent.start).format('LLLL'));
             $('#horaFinal').val(moment(calEvent.end).format('LLLL'));
-            console.log(calEvent);
             id_reservation = calEvent.id;
             $('.selected').removeClass('selected');
             $(this).addClass('selected');
             $('#btn_group').addClass('hidden');
             console.log(self_id);
-            if(calEvent.id_client == self_id || rol == 'Especialista'){
-              $('#DescriptionEdit').val(calEvent.title);
+            $('#DescriptionEdit').val(calEvent.title);
+            if(calEvent.id_client == self_id){
+              $('#DescriptionEdit').prop("readonly",false);
               $('#btn_group').removeClass('hidden');
               $('#precioEdit').val(calEvent.cost);
             }
@@ -104,11 +108,10 @@
           businessHours: businessHoursGlobal,
           validRange: function(nowDate) {
             return {
-              // start: yesterdayDate,
+              // start: moment().subtract(4, 'hours'),
               end: nowDate.clone().add(1, 'months')
             };
           },
-          // selectConstraint :'businessHours'
           });
 
       }

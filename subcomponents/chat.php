@@ -67,6 +67,7 @@ $(document).ready( function () {
     $('#message').removeClass('hidden');
     receptor_id = id;
     console.log(name);
+    $('.message_container').remove();
     $('#transmiterName').html(name);
     request={
       guessUser: id
@@ -76,7 +77,6 @@ $(document).ready( function () {
       data: request,
       url:"http://localhost/reservas/controladores/Chat/getMessages.php",
       success: function(data, status){
-        $('.message_container').remove();
         data = JSON.parse(data)
         data.sort(function(a,b){
             return a['id'] - b['id'];
@@ -85,7 +85,7 @@ $(document).ready( function () {
           if(data[i].receptor_id == <?php echo $_SESSION['userId'] ?>){
             $('#chatMessages').append('<li class="mb-2 guessMessage message_container"><div class="p-1 message_text">'+ data[i].message_body +'<small class="small" style="font-size: 10px; display: block;">'+moment(data[i].time).fromNow()+'</small></div></li>');
           }else{
-            $('#chatMessages').append('<li class="mb-2 selfMessage message_container"><div class="p-1 message_text">'+ data[i].message_body +'<small class="small" style="font-size: 10px; display: block;"> '+moment(data[i].time).fromNow()+'</small></div></li>');
+            $('#chatMessages').append('<li class="mb-2 selfMessage message_container"><div class="p-1 message_text selfText">'+ data[i].message_body +'<small class="small" style="font-size: 10px; display: block;"> '+moment(data[i].time).fromNow()+'</small></div></li>');
           }
         }
       }
@@ -118,7 +118,7 @@ $(document).ready( function () {
         success:function(data, status){
           console.log(data);
           event.target.value = "";
-          $('#chatMessages').append('<li class=" mb-2 selfMessage"> <div class="p-1 message_text"> '+ request.message +' </div></li>');
+          $('#chatMessages').append('<li class="message_container mb-2 selfMessage"> <div class="p-1 message_text selfText"> '+ request.message +'<small class="small" style="font-size: 10px; display: block;"> '+moment().fromNow()+' </div></li>');
         }
       })
 

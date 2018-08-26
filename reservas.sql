@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 25-08-2018 a las 21:40:14
+-- Tiempo de generación: 26-08-2018 a las 12:52:23
 -- Versión del servidor: 5.7.19
 -- Versión de PHP: 7.1.9
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `message_body` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `time` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `messages`
@@ -57,7 +57,12 @@ INSERT INTO `messages` (`id`, `transmiter_id`, `receptor_id`, `message_body`, `t
 (12, '19', '21', 'alo', '2018-08-20T13:08:55-04:00'),
 (13, '19', '20', 'aja', '2018-08-20T13:09:07-04:00'),
 (14, '19', '20', 'que lo que', '2018-08-23T08:32:37-04:00'),
-(15, '19', '20', 'nuevo mensaje de johangel para jose', '2018-08-23T09:31:12-04:00');
+(15, '19', '20', 'nuevo mensaje de johangel para jose', '2018-08-23T09:31:12-04:00'),
+(16, '19', '20', 'dds', '2018-08-25T17:44:36-04:00'),
+(17, '20', '19', 'sd', '2018-08-26T08:21:00-04:00'),
+(18, '20', '19', 'aja', '2018-08-26T08:31:25-04:00'),
+(19, '20', '19', 'fgd', '2018-08-26T08:31:47-04:00'),
+(20, '20', '19', 'prueba', '2018-08-26T08:32:29-04:00');
 
 -- --------------------------------------------------------
 
@@ -72,16 +77,22 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `type_user` varchar(30) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id_notification`)
-) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `notifications`
 --
 
 INSERT INTO `notifications` (`id_notification`, `reservation_id`, `type_user`, `user_id`) VALUES
+(58, 39, 'Especialista', 21),
+(57, 39, 'Usuario', 19),
+(56, 38, 'Especialista', 23),
+(55, 38, 'Usuario', 19),
 (48, 34, 'Especialista', 20),
 (50, 35, 'Especialista', 21),
+(54, 37, 'Especialista', 21),
 (52, 36, 'Especialista', 20),
+(53, 37, 'Usuario', 19),
 (42, 31, 'Especialista', 20),
 (45, 33, 'Usuario', 22);
 
@@ -103,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `reservations` (
   `specialist` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `client` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `reservations`
@@ -115,7 +126,9 @@ INSERT INTO `reservations` (`id`, `id_specialist`, `title`, `start`, `end`, `id_
 (33, 20, 'reserva rosmery', '2018-08-17T11:30:00', '2018-08-17T12:00:00', 22, '23$', 'jose perez', 'rosmery'),
 (34, 20, 'me duele la muela', '2018-07-30T08:00:00', '2018-07-30T08:30:00', 19, '23$', 'jose perez', 'Johangel leon'),
 (35, 21, 'prueba', '2018-08-20T09:00:00', '2018-08-20T09:30:00', 19, '15$', 'maria lucia', 'Johangel leon'),
-(32, 20, 'consulta numero 2', '2018-08-17T13:00:00', '2018-08-17T13:30:00', 19, '23$', 'jose perez', 'Johangel leon');
+(32, 20, 'consulta numero 2', '2018-08-17T13:00:00', '2018-08-17T13:30:00', 19, '23$', 'jose perez', 'Johangel leon'),
+(38, 23, 'consulta prueba', '2018-08-26T10:00:00', '2018-08-26T10:30:00', 19, '5$', 'El perro caliente', 'Johangel leon'),
+(39, 21, 'reserva prueba maria', '2018-08-26T10:00:00', '2018-08-26T10:30:00', 19, '15$', 'maria lucia', 'Johangel leon');
 
 -- --------------------------------------------------------
 
@@ -164,9 +177,9 @@ CREATE TABLE IF NOT EXISTS `specialist_info` (
 --
 
 INSERT INTO `specialist_info` (`id`, `user_id`, `active`, `specialistField`, `cmd`, `salary`, `days`, `hoursFrom`, `hoursTo`) VALUES
-(15, 21, 1, 'Traumatologia', '123123', 15, '1,5,6', '12:00', '17:00'),
-(14, 20, 1, 'Odontologia', '1231231', 22, '1,2,3,4,5,6', '8:00', '17:00'),
-(18, 23, 1, 'Traumatologia', '12', 5, '1,2,3,4,5,6', '8:00', '17:00');
+(15, 21, 1, 'Traumatologia', '123123', 15, '0,1,2,3,4,5,6', '8:00', '17:00'),
+(14, 20, 1, 'Odontologia', '1231231', 22, '1,4,6', '11:00', '17:00'),
+(18, 23, 1, 'Traumatologia', '12', 5, '0,1,2,3,4,5,6', '8:00', '17:00');
 
 -- --------------------------------------------------------
 
@@ -186,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `user_info` (
   `Dni` varchar(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
   `profile_img` varchar(70) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `user_info`
@@ -199,7 +212,10 @@ INSERT INTO `user_info` (`id`, `user_id`, `rol`, `genero`, `edad`, `fecha_nacimi
 (7, 21, 'Especialista', 'Mujer', 25, '2018-08-30', 'AB Positivo', '123123', '19_08_2018_15_00_29img_muestra.jpg'),
 (8, 22, 'usuario', NULL, NULL, NULL, NULL, NULL, NULL),
 (9, 23, 'Especialista', NULL, NULL, NULL, NULL, NULL, NULL),
-(10, 24, 'usuario', NULL, NULL, NULL, NULL, NULL, NULL);
+(10, 24, 'usuario', NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 25, 'usuario', NULL, NULL, NULL, NULL, NULL, NULL),
+(12, 26, 'usuario', NULL, NULL, NULL, NULL, NULL, NULL),
+(13, 27, 'usuario', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -213,21 +229,48 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `correo` varchar(250) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `nombre` varchar(40) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `clave` varchar(40) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `validated` varchar(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `correo`, `nombre`, `clave`) VALUES
-(19, 'johangel@gmail.com', 'Johangel leon', 'secret'),
-(18, 'Pepe@gmail.com', 'Pepe', 'secret'),
-(20, 'jose@gmail.com', 'jose perez', 'secret'),
-(21, 'maria@gmail.com', 'maria lucia', 'secret'),
-(22, 'rosmery@gmail.com', 'rosmery', 'secret'),
-(23, 'perro@gmail.com', 'El perro caliente', 'secret'),
-(24, 'perro2@gmail.com', 'perro1', 'secret');
+INSERT INTO `usuarios` (`id`, `correo`, `nombre`, `clave`, `validated`) VALUES
+(19, 'johangel@gmail.com', 'Johangel leon', 'secret', '1'),
+(18, 'Pepe@gmail.com', 'Pepe', 'secret', '1'),
+(20, 'jose@gmail.com', 'jose perez', 'secret', '1'),
+(21, 'maria@gmail.com', 'maria lucia', 'secret', '1'),
+(22, 'rosmery@gmail.com', 'rosmery', 'secret', '1'),
+(23, 'perro@gmail.com', 'El perro caliente', 'secret', '1'),
+(24, 'perro2@gmail.com', 'perro1', 'secret', '0'),
+(25, 'Peter@gmail.com', 'John ', 'secret', '0'),
+(26, 'belkis@gmail.com', 'Belkis Martinez', 'secret', '0'),
+(27, 'johnsito@gmail.com', 'johnsito leon', 'secret', '0');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `validation_keys`
+--
+
+DROP TABLE IF EXISTS `validation_keys`;
+CREATE TABLE IF NOT EXISTS `validation_keys` (
+  `id` int(4) NOT NULL AUTO_INCREMENT,
+  `user_id` int(4) NOT NULL,
+  `validation_key` varchar(50) NOT NULL,
+  `user_email` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `validation_keys`
+--
+
+INSERT INTO `validation_keys` (`id`, `user_id`, `validation_key`, `user_email`) VALUES
+(1, 26, 'validation26_08_2018_00_21_12', ''),
+(2, 27, 'validation26_08_2018_00_24_14', 'johnsito@gmail.com');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

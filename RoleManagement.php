@@ -75,31 +75,31 @@
               <label for=""> Horario de especialista </label>
               <br>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" checked="true" type="checkbox" id="day1" value="1">
+                <input class="form-check-input" checked="" type="checkbox" id="day1" value="1">
                 <label class="form-check-label" for="lunes">Lunes</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" checked="true" type="checkbox" id="day2" value="2">
+                <input class="form-check-input" checked="" type="checkbox" id="day2" value="2">
                 <label class="form-check-label" for="martes">Martes</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" checked="true" type="checkbox" id="day3" value="3">
+                <input class="form-check-input" checked="" type="checkbox" id="day3" value="3">
                 <label class="form-check-label" for="miercoles">Miercoles</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" checked="true" type="checkbox" id="day4" value="4">
+                <input class="form-check-input" checked="" type="checkbox" id="day4" value="4">
                 <label class="form-check-label" for="jueves">Jueves</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" checked="true" type="checkbox" id="day5" value="5">
+                <input class="form-check-input" checked="" type="checkbox" id="day5" value="5">
                 <label class="form-check-label" for="viernes">Viernes</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" checked="true" type="checkbox" id="day6" value="6">
+                <input class="form-check-input" checked="" type="checkbox" id="day6" value="6">
                 <label class="form-check-label" for="sabado">Sabado</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="day7" value="7">
+                <input class="form-check-input" type="checkbox" id="day0" value="0">
                 <label class="form-check-label" for="domingo">domigo</label>
               </div>
 
@@ -175,6 +175,7 @@
   } );
 
   function selectUser(event, name, id){
+    $('input[type=checkbox]').prop('checked',false);
     user_id = id;
     row_table = event.target.parentElement.children[1];
     Specialists.selectSpecialist(event, name,user_id);
@@ -192,7 +193,6 @@
     }
   }
 
-
   function updateSpecialistInfo(evt){
 
     evt.preventDefault();
@@ -209,7 +209,7 @@
         var active = 0;
     }
 
-    for(var i = 1; i<8; i++){
+    for(var i = 0; i<7; i++){
       if($('#day' + i)['0'].checked){
         daysArray.push($('#day' + i).val());
       }
@@ -228,7 +228,7 @@
     }
 
     console.log(request);
-    Specialists.updateSpecialistInfo(request);
+    Specialists.updateSpecialistInfo(request, rol);
 
   }
 

@@ -25,19 +25,28 @@ var Specialists = {
           $('#salary').val('');
           $('#specializacionField').val('');
           $('#specialistActive')['0'].checked = false;
-
+          $('#hoursTo').val('');
+          $('#hoursFrom').val('');
         }else{
-          var specialist = {}
+           var specialist = {};
            specialist = JSON.parse(data);
+           specialist.days = JSON.parse("[" +specialist.days+"]");
+           console.log(specialist);
            $('#optionsContainer').removeClass('hidden');
            $('#CMD').val(specialist['cmd']);
            $('#rol').val('Especialista');
            $('#salary').val(specialist['salary']);
            $('#specializacionField').val(specialist['specialistField']);
+           $('#hoursTo').val(specialist.hoursTo);
+           $('#hoursFrom').val(specialist.hoursFrom);
+
            if(specialist['active'] == 1){
              $('#specialistActive')['0'].checked = true;
            }else{
              $('#specialistActive')['0'].checked = false;
+           }
+           for(var i = 0; i<specialist.days.length; i++){
+             $('#day'+specialist.days[i])['0'].checked = true;
            }
         }
 
@@ -48,7 +57,7 @@ var Specialists = {
     });
   },
 
-  updateSpecialistInfo: function(request){
+  updateSpecialistInfo: function(request, rol){
     $.ajax({
       type: "POST",
       url : "http://localhost/reservas/controladores/Specialists/updateSpecialistInfo.php",
