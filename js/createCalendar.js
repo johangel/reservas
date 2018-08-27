@@ -6,11 +6,7 @@
   var url_conditional;
   var canEdit = true;
   var canClick = true;
-  var businessHoursGlobal =  {dow: [ 1, 2, 3, 4 ],
-                              start: '10:00',
-                              end: '18:00',
-                              }
-
+  var businessHoursGlobal = {}
 
   $(document).ready(function() {
     if(rol == 'Especialista'){
@@ -86,9 +82,9 @@
             $('#btn_group').addClass('hidden');
             console.log(self_id);
             $('#DescriptionEdit').val(calEvent.title);
-            if(calEvent.id_client == self_id){
-              $('#DescriptionEdit').prop("readonly",false);
+            if(calEvent.id_client == self_id || rol == 'Especialista'){
               $('#btn_group').removeClass('hidden');
+              $('#DescriptionEdit').prop("readonly",false);
               $('#precioEdit').val(calEvent.cost);
             }
           },
