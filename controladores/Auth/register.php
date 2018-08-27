@@ -24,6 +24,9 @@ $validation_key = 'validation'.date('d_m_Y_H_i_s');
 $sql_create_validate_key = "INSERT INTO validation_keys (user_id, validation_key, user_email) VALUES ('$lastid', '$validation_key', '$email')";
 $result3 = mysqli_query($conn, $sql_create_validate_key);
 
+$linkToValidateAccout = 'http://localhost/reservas/validationAccount.php?validation_key='.$validation_key;
+include '../../subcomponents/emailVerificationMessage.php';
+
 echo '1';
 mysqli_close($conn);
 

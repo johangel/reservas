@@ -3,6 +3,7 @@ session_start();
 if (isset($_SESSION['username'])){
 header( "Location: http://localhost/reservas");
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +13,9 @@ header( "Location: http://localhost/reservas");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="icon" href="assets/logo.png">
-<?php include 'subcomponents/dependencies.php'; ?>
+<?php include 'subcomponents/dependencies.php';
+include 'subcomponents/loader.php';
+?>
 <title>Sitema Reservas</title>
 </head>
 <body>

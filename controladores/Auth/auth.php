@@ -12,6 +12,10 @@ $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 
 if(!($row == null)){
+  if($row['validated'] == '0'){
+    echo 'noVal';
+    return;
+  }
   echo 'true';
   $_SESSION['username'] = $row['nombre'];
   $_SESSION['userId'] = $row['user_id'];

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 26-08-2018 a las 12:52:23
+-- Tiempo de generación: 26-08-2018 a las 19:08:45
 -- Versión del servidor: 5.7.19
 -- Versión de PHP: 7.1.9
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `message_body` text CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `time` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `messages`
@@ -62,7 +62,8 @@ INSERT INTO `messages` (`id`, `transmiter_id`, `receptor_id`, `message_body`, `t
 (17, '20', '19', 'sd', '2018-08-26T08:21:00-04:00'),
 (18, '20', '19', 'aja', '2018-08-26T08:31:25-04:00'),
 (19, '20', '19', 'fgd', '2018-08-26T08:31:47-04:00'),
-(20, '20', '19', 'prueba', '2018-08-26T08:32:29-04:00');
+(20, '20', '19', 'prueba', '2018-08-26T08:32:29-04:00'),
+(21, '19', '21', 'panocha', '2018-08-26T08:55:26-04:00');
 
 -- --------------------------------------------------------
 
@@ -199,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `user_info` (
   `Dni` varchar(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
   `profile_img` varchar(70) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `user_info`
@@ -212,10 +213,7 @@ INSERT INTO `user_info` (`id`, `user_id`, `rol`, `genero`, `edad`, `fecha_nacimi
 (7, 21, 'Especialista', 'Mujer', 25, '2018-08-30', 'AB Positivo', '123123', '19_08_2018_15_00_29img_muestra.jpg'),
 (8, 22, 'usuario', NULL, NULL, NULL, NULL, NULL, NULL),
 (9, 23, 'Especialista', NULL, NULL, NULL, NULL, NULL, NULL),
-(10, 24, 'usuario', NULL, NULL, NULL, NULL, NULL, NULL),
-(11, 25, 'usuario', NULL, NULL, NULL, NULL, NULL, NULL),
-(12, 26, 'usuario', NULL, NULL, NULL, NULL, NULL, NULL),
-(13, 27, 'usuario', NULL, NULL, NULL, NULL, NULL, NULL);
+(24, 38, 'usuario', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -231,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `clave` varchar(40) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `validated` varchar(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -244,10 +242,7 @@ INSERT INTO `usuarios` (`id`, `correo`, `nombre`, `clave`, `validated`) VALUES
 (21, 'maria@gmail.com', 'maria lucia', 'secret', '1'),
 (22, 'rosmery@gmail.com', 'rosmery', 'secret', '1'),
 (23, 'perro@gmail.com', 'El perro caliente', 'secret', '1'),
-(24, 'perro2@gmail.com', 'perro1', 'secret', '0'),
-(25, 'Peter@gmail.com', 'John ', 'secret', '0'),
-(26, 'belkis@gmail.com', 'Belkis Martinez', 'secret', '0'),
-(27, 'johnsito@gmail.com', 'johnsito leon', 'secret', '0');
+(38, 'johangel2807@gmail.com', 'Johangel Leon', 'secret', '1');
 
 -- --------------------------------------------------------
 
@@ -262,15 +257,7 @@ CREATE TABLE IF NOT EXISTS `validation_keys` (
   `validation_key` varchar(50) NOT NULL,
   `user_email` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `validation_keys`
---
-
-INSERT INTO `validation_keys` (`id`, `user_id`, `validation_key`, `user_email`) VALUES
-(1, 26, 'validation26_08_2018_00_21_12', ''),
-(2, 27, 'validation26_08_2018_00_24_14', 'johnsito@gmail.com');
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

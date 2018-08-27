@@ -87,7 +87,10 @@ var Specialists = {
             dow: JSON.parse("[" +response.specilist_info.days +"]"),
             start: response.specilist_info.hoursFrom,
             end: response.specilist_info.hoursTo
-          }
+          },
+          selectConstraint :"businessHours",
+          eventConstraint:"businessHours"
+
         })
 
         for(var i = 0; i<specialist_reservations.length; i++){

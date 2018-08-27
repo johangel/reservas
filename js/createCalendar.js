@@ -6,7 +6,11 @@
   var url_conditional;
   var canEdit = true;
   var canClick = true;
-  var businessHoursGlobal =  {}
+  var businessHoursGlobal =  {dow: [ 1, 2, 3, 4 ],
+                              start: '10:00',
+                              end: '18:00',
+                              }
+
 
   $(document).ready(function() {
     if(rol == 'Especialista'){
@@ -88,7 +92,18 @@
               $('#precioEdit').val(calEvent.cost);
             }
           },
-          eventDrop: function( event, jsEvent, ui, view ){
+          eventDrop: function(event ,delta, revertFunc, jsEvent, ui, view ){
+            if(!canCreate){
+              toastr.error('escoger una especialista antes de editar las horas de reservaciones');
+              revertFunc();
+              return;
+            }
+            if(moment(event.start).isBefore(moment().subtract(3, 'hours'))) {
+              console.log(moment(event.start));
+              toastr.error('No pueden ser seleccionadas horas pasadas');
+              revertFunc();
+              return;
+            }
             request ={
               start: moment(event.start).format(),
               end: moment(event.end).format(),
@@ -108,10 +123,12 @@
           businessHours: businessHoursGlobal,
           validRange: function(nowDate) {
             return {
-              // start: moment().subtract(4, 'hours'),
+              start: moment().subtract(12, 'hours'),
               end: nowDate.clone().add(1, 'months')
             };
           },
+           selectConstraint :"businessHours",
+           eventConstraint:"businessHours"
           });
 
       }

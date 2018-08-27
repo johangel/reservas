@@ -1,6 +1,6 @@
 <?php
-require './../phpMailer/PHPMailerAutoload.php';
-require './../phpMailer/credentials.php';
+require '../../phpMailer/PHPMailerAutoload.php';
+require '../../phpMailer/credentials.php';
 
 $mail = new PHPMailer;
 
@@ -15,20 +15,24 @@ $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, 
 $mail->Port = 587;                                    // TCP port to connect to
 
 $mail->setFrom(EMAIL, 'PepeReservas');
-$mail->addAddress('johangel2807@gmail.com', 'johangel');     // Add a recipient
+$mail->addAddress($email, $name);     // Add a recipient
 $mail->addReplyTo(EMAIL);
 
 // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
 // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 $mail->isHTML(true);                                  // Set email format to HTML
 
-$mail->Subject = 'Mensaje prueba';
-$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+$mail->Subject = 'Mensaje de validacion para su cuenta';
+$mail->Body    = '<p>Gracias por registrarte en nuestra plataforma, por favor haz click en el siguiente link
+                      para poder verificar tu cuenta exitosamente</p> <br>
+                      ' . $linkToValidateAccout;
+$mail->AltBody = '<p>Gracias por registrarte en nuestra plataforma, por favor haz click en el siguiente link
+                      para poder verificar tu cuenta exitosamente</p> <br>
+                      ' . $linkToValidateAccout;
 
 if(!$mail->send()) {
-    echo 'Message could not be sent.';
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
+    // echo 'Message could not be sent.';
+    // echo 'Mailer Error: ' . $mail->ErrorInfo;
 } else {
-    echo 'Message has been sent';
+    // echo 'Message has been sent';
 }

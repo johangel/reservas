@@ -6,7 +6,17 @@ $sql = "SELECT * FROM validation_keys WHERE validation_key = '$validation_key'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 $mensaje;
+
+
 if(!($row == null)){
+  $email = $row['user_email'];
+
+  $sqlUpdateValidationAccount ="UPDATE usuarios SET validated = '1' WHERE correo = '$email'";
+  $result = mysqli_query($conn, $sqlUpdateValidationAccount);
+
+  $sqlDeleteValidation ="DELETE FROM validation_keys WHERE validation_key = '$validation_key'";
+  $result = mysqli_query($conn, $sqlDeleteValidation);
+
   $mensaje = '¡Felicitaciones! la cuenta enlazada al correo '. $row['user_email'].' fue validada exitosamente';
 }else{
   $mensaje = 'No pudimos validar ninguna cuenta con el codigo utilizado';
