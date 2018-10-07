@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../reservas/styles/chat.css">
+<link rel="stylesheet" href="../styles/chat.css">
 
 <div class="chatWindow">
 
@@ -23,32 +23,20 @@
     <input type="text" class="messageField" onkeyup="submitMessage(event)" placeholder="escribe un mensaje..">
 </div>
 
+<script src="../../js/controlers/messages.js"></script>
 <script type="text/javascript">
 
-var receptor_id;
+  var receptor_id;
 
-$(document).ready( function () {
-  getUsersSpecialist();
-});
+  $(document).ready( function () {
+    getUsersSpecialist();
+  });
 
   function getUsersSpecialist(){
     request = {
       specialist_id: <?php echo $_SESSION['userId'] ?>
     };
-
-    $.ajax({
-      type:'GET',
-      url:"http://localhost/reservas/controladores/Specialists/getSpecialistFromClient.php",
-      data: request,
-      success: function(data, status){
-        data =JSON.parse(data);
-        console.log(data);
-        for(var i = 0; i<data.length; i++){
-
-          $('#userList').append('<li class="p-1 pl-2 chatUser" onclick="openChat('+data[i].id +', \''+data[i].nombre+'\')">'+data[i].nombre+'</li>');
-        }
-      }
-    })
+    messagesModels.getSpecialistFromClient(request);
   }
 
   function hideChat(){
@@ -62,34 +50,20 @@ $(document).ready( function () {
     }
   }
 
-  function openChat(id, name){
-
+  function openChat(id, name, amount){
+    console.log(amount);
+    if(amount > 0){
+      $('#notification' + id).addClass('hidden');
+    }
     $('#message').removeClass('hidden');
     receptor_id = id;
-    console.log(name);
     $('.message_container').remove();
     $('#transmiterName').html(name);
     request={
-      guessUser: id
+      guessUser: id,
+      selfId: <?php echo $_SESSION['userId'] ?>
     };
-    $.ajax({
-      type:'GET',
-      data: request,
-      url:"http://localhost/reservas/controladores/Chat/getMessages.php",
-      success: function(data, status){
-        data = JSON.parse(data)
-        data.sort(function(a,b){
-            return a['id'] - b['id'];
-        });
-        for(var i= 0; i<data.length; i++){
-          if(data[i].receptor_id == <?php echo $_SESSION['userId'] ?>){
-            $('#chatMessages').append('<li class="mb-2 guessMessage message_container"><div class="p-1 message_text">'+ data[i].message_body +'<small class="small" style="font-size: 10px; display: block;">'+moment(data[i].time).fromNow()+'</small></div></li>');
-          }else{
-            $('#chatMessages').append('<li class="mb-2 selfMessage message_container"><div class="p-1 message_text selfText">'+ data[i].message_body +'<small class="small" style="font-size: 10px; display: block;"> '+moment(data[i].time).fromNow()+'</small></div></li>');
-          }
-        }
-      }
-    })
+    messagesModels.openChat(request);
   }
 
   function hideChatMessages(){
@@ -98,11 +72,8 @@ $(document).ready( function () {
 
   function submitMessage(event){
 
-    if(event.target.value == ''){
-      return;
-    }
-
     var keycode = (event === null) ? window.event.keyCode : event.which;
+
     if(keycode === 13) {
       var request ={
         message: event.target.value,
@@ -111,18 +82,15 @@ $(document).ready( function () {
         time: moment().format()
       };
 
-      $.ajax({
-        type:'POST',
-        data:request,
-        url:"http://localhost/reservas/controladores/Chat/sendMessage.php",
-        success:function(data, status){
-          console.log(data);
-          event.target.value = "";
-          $('#chatMessages').append('<li class="message_container mb-2 selfMessage"> <div class="p-1 message_text selfText"> '+ request.message +'<small class="small" style="font-size: 10px; display: block;"> '+moment().fromNow()+' </div></li>');
-        }
-      })
+      if(event.target.value.trim().length > 0) {
+        // string only contained whitespace (ie. spaces, tabs or line breaks)
+        console.log('vacio');
+        console.log(event.target.value);
+        return false;
+      }
+    // messagesModels.submitMessage(request, event);
 
-      console.log(request);
+    // console.log(request);
     }
   }
 </script>

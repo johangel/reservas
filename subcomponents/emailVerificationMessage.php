@@ -1,6 +1,6 @@
 <?php
-require '../../phpMailer/PHPMailerAutoload.php';
-require '../../phpMailer/credentials.php';
+require '../../dependencies/phpMailer/PHPMailerAutoload.php';
+require '../../dependencies/phpMailer/credentials.php';
 
 $mail = new PHPMailer;
 
@@ -31,8 +31,8 @@ $mail->AltBody = '<p>Gracias por registrarte en nuestra plataforma, por favor ha
                       ' . $linkToValidateAccout;
 
 if(!$mail->send()) {
-    // echo 'Message could not be sent.';
-    // echo 'Mailer Error: ' . $mail->ErrorInfo;
+     echo 'Message could not be sent.';
+     echo 'Mailer Error: ' . $mail->ErrorInfo;
 } else {
-    // echo 'Message has been sent';
+   echo 'Message has been sent';
 }
