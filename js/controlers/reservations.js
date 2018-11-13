@@ -5,12 +5,17 @@ var reservationModel = {
       url:"http://localhost/reservas/models/Reservations/saveReservation.php",
       data: eventData,
       success: function(data, status){
+
+        if(data == 'badHour'){
+          toastr.error('ya tienes esta hora en otra reserva');
+          return;
+        }
+
         $('#calendar').fullCalendar('renderEvent', eventData); // stick? = true
         location.reload();
       }
     })
   },
-
 
   deleteReservation: function(request){
     $.ajax({
@@ -39,7 +44,7 @@ var reservationModel = {
       url : "http://localhost/reservas/models/Reservations/updateReservation.php",
       success: function(response, status){
         toastr.success('se edito la reserva con exito');
-     
+
       }
     })
   },
@@ -80,5 +85,47 @@ var reservationModel = {
         toastr.success(data);
       }
     })
+  },
+
+  getReservationByClient: function(request){
+    var returnReservations = [];
+    $.ajax({
+      type: 'GET',
+      async: false,
+      data: request,
+      url: 'http://localhost/reservas/models/reservations/getReservationsByClientId.php',
+      success: function(data, status){
+        returnReservations = JSON.parse(data);
+      }
+    });
+    return returnReservations;
+  },
+
+  getReservationsBySpecialist: function(request){
+    var returnReservations = [];
+    $.ajax({
+      type: 'GET',
+      async: false,
+      data: request,
+      url: 'http://localhost/reservas/models/reservations/getReservationsBySpecialistId.php',
+      success: function(data, status){
+        returnReservations = JSON.parse(data);
+      }
+    });
+    return returnReservations;
+  },
+
+  getReservationsByField: function(request){
+    var returnReservations = [];
+    $.ajax({
+      type: 'GET',
+      async: false,
+      data: request,
+      url: 'http://localhost/reservas/models/reservations/getReservationsByFieldName.php',
+      success: function(data, status){
+        returnReservations = JSON.parse(data);
+      }
+    });
+    return returnReservations;
   }
 }

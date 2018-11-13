@@ -6,7 +6,8 @@
   var url_conditional;
   var canEdit = true;
   var canClick = true;
-  var businessHoursGlobal = {}
+  var businessHoursGlobal = {};
+
 
   $(document).ready(function() {
     if(rol == 'Especialista'){
@@ -115,6 +116,7 @@
             request ={
               start: moment(event.start).format(),
               end: moment(event.end).format(),
+              start_format: moment(event.start).format('LLLL'),
               id: event.id
             };
 
@@ -127,7 +129,7 @@
           validRange: function(nowDate) {
             return {
               start: moment().subtract(12, 'hours'),
-              end: nowDate.clone().add(2, 'months')
+              end: nowDate.clone().add(6, 'months')
             };
           },
            selectConstraint :"businessHours",

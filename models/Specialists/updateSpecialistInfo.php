@@ -67,7 +67,12 @@ if(!($row == NULL)){
             $sqlSendNotifications = "INSERT INTO info_notifications (user_id, message) VALUES ('$ClientesArray[$i]', '$messageText')";
             $resultSendNotification = mysqli_query($conn, $sqlSendNotifications);
           }
+
         }
+        //notificacion al especialista en cuestion
+        $specialsitMessage = "Se le notifican que sus horas de ejercicio han sido cambiadas, verificar su nuevo periodo de trabajo";
+        $sqlspecialistMessage = "INSERT INTO info_notifications (user_id, message) VALUES ('$id', '$specialsitMessage')";
+        $resultMessageSpecialist = mysqli_query($conn, $sqlspecialistMessage);
 
 
       }

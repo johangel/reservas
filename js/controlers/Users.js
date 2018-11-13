@@ -108,7 +108,20 @@ var userModel = {
         toastr.success('La imagen fue cambiada con exito');
       }
     })
-  }
+  },
 
+  getAllPacients: function(){
+    var pacients = [];
+    $.ajax({
+      type:'GET',
+      async: false,
+      url : "http://localhost/reservas/models/User/getAllPacients.php",
+      success:function(data, status){
+        data = JSON.parse(data);
+        pacients = data;
+      }
+    })
+    return pacients;
+  }
 
 }

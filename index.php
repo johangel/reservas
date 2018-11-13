@@ -148,8 +148,33 @@ if (!isset($_SESSION['username'])){
 
 
       </style>
+      <script src="js/controlers/messages.js"></script>
 
       <script type="text/javascript">
+
+        $(document).ready( function () {
+          setNewMessagesInHeader();
+          setInterval(function(){
+             setNewMessagesInHeader();
+          }, 5000);
+        });
+
+        function setNewMessagesInHeader(){
+          messagesHtml = '';
+          messagesArray = messagesModels.getNotificationHeader();
+          if(messagesArray.length > 0){
+            for(var i = 0; i<messagesArray.length; i++){
+              messagesHtml += '<li class="message_notification" onclick="deleteNotificationHeader('+messagesArray[i]['id_notification']+',event)">'+messagesArray[i]["message"]+'</li>'
+            }
+          }else{
+            messagesHtml = '<li class="message_notification">No tienes notificaciones sin leer en este momento</li>';
+          }
+          // $('#notifications_header_container').html('');
+          $('#notifications_header_container').html(messagesHtml);
+          $('#amountNotificationsHeader').html(messagesArray.length);
+          // console.log(messagesArray);
+        }
+
         function showNotificationsHeader(){
           $('#notifications_header_container').toggleClass('hidden');
         }
@@ -352,6 +377,9 @@ if (!isset($_SESSION['username'])){
 
   $(document).ready( function () {
     getUsersSpecialist();
+    setInterval(function(){
+       getUsersSpecialist();
+    }, 5000);
   });
 
   function getUsersSpecialist(){

@@ -33,6 +33,7 @@ var authModel = {
       success :function(data, status){
         if(data == 'correoTomado'){
           toastr.error('Este correo ya ha sido tomado por otro usuario');
+          $('#loader').addClass('hidden');
           return;
         }
 

@@ -21,15 +21,6 @@ $host_url = 'http://'.$_SERVER['HTTP_HOST'].'/reservas';
     <span id="amountNotificationsHeader" style="color: white"><?php echo count($messagesArray); ?></span>
   </div>
     <ul id="notifications_header_container" class="message_notification_header_container shadow rounded hidden">
-      <?php
-      if(count($messagesArray) > 0){
-        for($i = 0; $i<count($messagesArray); $i++){
-          echo '<li class="message_notification" onclick="deleteNotificationHeader('.$messagesArray[$i]['id_notification'].',event)">'.$messagesArray[$i]["message"].'</li>';
-        }
-      }else{
-         echo '<li class="message_notification">No tienes notificaciones sin leer en este momento</li>';
-      }
-      ?>
     </ul>
 </li>
 
@@ -77,8 +68,33 @@ $host_url = 'http://'.$_SERVER['HTTP_HOST'].'/reservas';
 
 
 </style>
+<script src="../js/controlers/messages.js"></script>
 
 <script type="text/javascript">
+
+  $(document).ready( function () {
+    setNewMessagesInHeader();
+    setInterval(function(){
+       setNewMessagesInHeader();
+    }, 5000);
+  });
+
+  function setNewMessagesInHeader(){
+    messagesHtml = '';
+    messagesArray = messagesModels.getNotificationHeader();
+    if(messagesArray.length > 0){
+      for(var i = 0; i<messagesArray.length; i++){
+        messagesHtml += '<li class="message_notification" onclick="deleteNotificationHeader('+messagesArray[i]['id_notification']+',event)">'+messagesArray[i]["message"]+'</li>'
+      }
+    }else{
+      messagesHtml = '<li class="message_notification">No tienes notificaciones sin leer en este momento</li>';
+    }
+    // $('#notifications_header_container').html('');
+    $('#notifications_header_container').html(messagesHtml);
+    $('#amountNotificationsHeader').html(messagesArray.length);
+    // console.log(messagesArray);
+  }
+
   function showNotificationsHeader(){
     $('#notifications_header_container').toggleClass('hidden');
   }

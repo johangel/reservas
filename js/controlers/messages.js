@@ -7,7 +7,7 @@ messagesModels = {
       data: request,
       success: function(data, status){
         data =JSON.parse(data);
-        console.log(data);
+        $('#userList').html('');
         for(var i = 0; i<data.length; i++){
           if(data[i].amount > 0){
             $('#userList').append('<li class="p-1 pl-2 chatUser position-relative" onclick="openChat('+data[i].id +', \''+data[i].nombre+'\','+data[i].amount+')">'+data[i].nombre+'<span style="right: 10px; top: 7px;" id="notification'+data[i].id+'" class="badge badge-primary position-absolute">'+data[i].amount+'</span></li>');
@@ -62,6 +62,19 @@ messagesModels = {
         console.log(data);
       }
     })
+  },
+
+  getNotificationHeader: function(){
+    var messagesArray = [];
+    $.ajax({
+      type:'GET',
+      async: false,
+      url:"http://localhost/reservas/models/Chat/getNotificationHeader.php",
+      success:function(data, status){
+        messagesArray = JSON.parse(data);
+      }
+    })
+    return messagesArray;
   }
 
 }

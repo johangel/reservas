@@ -46,7 +46,7 @@
         <div class="form-group row">
           <label for="inputPassword3" class="col-sm-4 col-form-label">Dni</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="dni" placeholder="Documento identidad">
+            <input type="text" class="form-control" id="dni" onkeydown="onlyNumbers(event)" maxlength="8" placeholder="Documento identidad">
           </div>
         </div>
 

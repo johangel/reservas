@@ -23,13 +23,16 @@
     <input type="text" class="messageField" onkeyup="submitMessage(event)" placeholder="escribe un mensaje..">
 </div>
 
-<script src="../../js/controlers/messages.js"></script>
+<script src="../js/controlers/messages.js"></script>
 <script type="text/javascript">
 
   var receptor_id;
 
   $(document).ready( function () {
     getUsersSpecialist();
+    setInterval(function(){
+       getUsersSpecialist();
+    }, 5000);
   });
 
   function getUsersSpecialist(){

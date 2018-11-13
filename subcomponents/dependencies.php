@@ -7,7 +7,8 @@
 <!-- <script src='fullCalendar-3.9.0/demos/js/theme-chooser.js'></script> -->
 
 <script src='../dependencies/fullCalendar-3.9.0/lib/toastr.min.js'></script>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js">
+</script>
 <link rel="stylesheet" href='../dependencies/fullCalendar-3.9.0/lib/toastr.min.css'>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
